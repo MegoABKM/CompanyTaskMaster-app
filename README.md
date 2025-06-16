@@ -77,4 +77,4 @@ This project is powered by a robust and reliable set of technologies:
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache 2 License.
