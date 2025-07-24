@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/static/static.dart';
-import 'package:tasknotate/controller/theme_controller.dart';
-import 'package:tasknotate/core/localization/changelocal.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/static/static.dart';
 
 abstract class OnboardingController extends GetxController {
   next();
   onPageChanged(int index);
+  skip();
 }
 
 class OnBoardingControllerImp extends OnboardingController {
@@ -16,33 +15,63 @@ class OnBoardingControllerImp extends OnboardingController {
   int currentpage = 0;
   MyServices myServices = Get.find();
 
+  int get pageCount => onBoardingList.length;
+
+  @override
+  void onInit() {
+    pageController = PageController();
+    super.onInit();
+  }
+
+  @override
+  onPageChanged(int index) {
+    currentpage = index;
+    update(); // This notifies GetBuilders to rebuild
+  }
+
   @override
   next() {
-    currentpage++;
-    if (currentpage > onBoardingList.length - 1) {
-      myServices.sharedPreferences.setString("step", "1");
-      Get.offAllNamed(AppRoute.home);
+    // If we are on the last page, complete the onboarding
+    if (currentpage >= pageCount - 1) {
+      _completeOnboarding();
     } else {
+      // Otherwise, go to the next page
+      currentpage++;
       pageController.animateToPage(
         currentpage,
-        duration: const Duration(milliseconds: 450),
+        duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
     }
   }
 
   @override
-  onPageChanged(int index) {
-    currentpage = index;
-    update();
+  skip() {
+    _completeOnboarding();
+  }
+
+  void _completeOnboarding() {
+    myServices.sharedPreferences.setString("step", "1");
+    Get.offAllNamed(AppRoute.login);
+  }
+
+  String getCurrentTitle() {
+    if (currentpage < pageCount) {
+      return onBoardingList[currentpage].title!;
+    }
+    return "";
+  }
+
+  String getCurrentBody() {
+    if (currentpage < pageCount) {
+      return onBoardingList[currentpage].body!;
+    }
+    return "";
   }
 
   @override
-  void onInit() {
-    // Initialize controllers
-    Get.put(ThemeController());
-    Get.put(LocalController());
-    pageController = PageController();
-    super.onInit();
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

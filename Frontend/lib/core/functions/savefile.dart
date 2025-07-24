@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http; // Import http package correctly
 import 'package:http_parser/http_parser.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 
 Future<void> uploadFile(File file, String fileType) async {
   // if (file == null) return;

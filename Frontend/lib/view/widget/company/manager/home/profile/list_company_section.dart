@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/managerhome_controller.dart';
-import 'package:tasknotate/core/constant/appthemes.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
+import 'package:companymanagment/controller/company/manager/homemanager/home_manager_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
 
 import '../../../../../../core/constant/routes.dart';
 
@@ -24,7 +23,6 @@ class ListCompanySection extends GetView<ManagerhomeController> {
         decoration: BoxDecoration(
           color: context.appTheme.cardColor,
           borderRadius: BorderRadius.circular(context.scaleConfig.scale(10)),
-          boxShadow: const [AppThemes.cardBoxShadow],
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(

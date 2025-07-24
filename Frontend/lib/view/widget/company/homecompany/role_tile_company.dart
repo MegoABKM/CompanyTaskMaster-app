@@ -1,81 +1,105 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/homecompany_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/homecompany_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class RoleTileCompany extends GetView<CompanyHomeController> {
   final String title;
   final String subtitle;
-  final VoidCallback onTap;
-  const RoleTileCompany(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.onTap});
+  final IconData icon;
+  final String roleKey;
+  final bool isSelected; // THE MISSING PARAMETER
+
+  const RoleTileCompany({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.roleKey,
+    required this.isSelected, // ADD IT TO THE CONSTRUCTOR
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scale = context.scaleConfig;
+    final bool isRtl = Get.locale?.languageCode == 'ar';
+
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.scaleConfig.scale(16),
-          vertical: context.scaleConfig.scale(12),
-        ),
+      onTap: () => controller.selectTile(roleKey),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.all(scale.scale(16)),
         decoration: BoxDecoration(
-          color: context.appTheme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(context.scaleConfig.scale(15)),
+          color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(scale.scale(20)),
           border: Border.all(
-            color: controller.selectedindex!
-                ? context.appTheme.colorScheme.primary
-                : context.appTheme.colorScheme.onSurface.withOpacity(0.2),
-            width: controller.selectedindex!
-                ? context.scaleConfig.scale(2)
-                : context.scaleConfig.scale(1),
+            color: isSelected ? theme.colorScheme.primary : theme.dividerColor,
+            width: isSelected ? 3.0 : 1.5,
           ),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: context.scaleConfig.scale(6),
-              offset: Offset(0, context.scaleConfig.scale(2)),
-            ),
+            if (isSelected)
+              BoxShadow(
+                color: theme.colorScheme.primary.withOpacity(0.25),
+                blurRadius: 12,
+                spreadRadius: 2,
+              )
+            else
+              BoxShadow(
+                color: theme.shadowColor.withOpacity(0.08),
+                blurRadius: 8,
+                offset: const Offset(0, 4),
+              ),
           ],
         ),
-        child: Row(
+        child: Stack(
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: context.appTheme.textTheme.bodyLarge?.copyWith(
-                      color: context.appTheme.colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: context.scaleConfig.scaleText(16),
-                    ),
+            // Centered content for the grid layout
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: scale.scale(60), // Even larger icon for grid
+                  color: isSelected
+                      ? theme.colorScheme.primary
+                      : theme.colorScheme.onSurface.withOpacity(0.7),
+                ),
+                SizedBox(height: scale.scale(12)),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: scale.scaleText(18),
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
                   ),
-                  SizedBox(height: context.scaleConfig.scale(4)),
-                  Text(
-                    subtitle,
-                    style: context.appTheme.textTheme.bodySmall?.copyWith(
-                      color: context.appTheme.colorScheme.onSurface
-                          .withOpacity(0.7),
-                      fontSize: context.scaleConfig.scaleText(12),
-                    ),
+                ),
+                SizedBox(height: scale.scale(4)),
+                Text(
+                  subtitle,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: scale.scaleText(14),
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                   ),
-                ],
+                ),
+              ],
+            ),
+            if (isSelected)
+              Positioned(
+                top: scale.scale(4),
+                // Use isRtl to correctly position the checkmark
+                left: isRtl ? scale.scale(4) : null,
+                right: isRtl ? null : scale.scale(4),
+                child: Icon(
+                  Icons.check_circle,
+                  color: theme.colorScheme.primary,
+                  size: scale.scale(28),
+                ),
               ),
-            ),
-            Icon(
-              controller.selectedindex!
-                  ? Icons.check_circle
-                  : Icons.circle_outlined,
-              color: controller.selectedindex!
-                  ? context.appTheme.colorScheme.primary
-                  : context.appTheme.colorScheme.onSurface.withOpacity(0.5),
-              size: context.scaleConfig.scale(28),
-            ),
           ],
         ),
       ),

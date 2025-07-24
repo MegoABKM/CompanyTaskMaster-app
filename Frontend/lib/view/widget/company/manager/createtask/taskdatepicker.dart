@@ -1,10 +1,19 @@
+// lib/view/widget/company/manager/createtask/taskdatepicker.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/createtask/createtask_controller.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
-class TaskDatePicker extends GetView<CreatetaskController> {
-  const TaskDatePicker({super.key});
+class TaskDatePicker extends StatelessWidget {
+  final String label;
+  final String hint;
+  final Function(String) onDateSelected;
+
+  const TaskDatePicker({
+    super.key,
+    required this.label,
+    required this.hint,
+    required this.onDateSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +24,14 @@ class TaskDatePicker extends GetView<CreatetaskController> {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2100),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2101),
       );
 
       if (selectedDate != null) {
         dateController.text =
             "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-        controller.updateDueDate(dateController.text);
+        onDateSelected(dateController.text);
       }
     }
 
@@ -30,7 +39,7 @@ class TaskDatePicker extends GetView<CreatetaskController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "321".tr, // Estimated Completion Date
+          label,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: scaleConfig.scaleText(16),
                 fontWeight: FontWeight.bold,
@@ -42,24 +51,12 @@ class TaskDatePicker extends GetView<CreatetaskController> {
           readOnly: true,
           onTap: _pickDate,
           decoration: InputDecoration(
-            hintText: "319".tr, // Select a date
-            hintStyle: TextStyle(
-              fontSize: scaleConfig.scaleText(14),
-              color: Colors.grey,
-            ),
+            hintText: hint,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(scaleConfig.scale(8)),
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: scaleConfig.scale(12),
-              vertical: scaleConfig.scale(10),
-            ),
-            suffixIcon: Icon(
-              Icons.calendar_today,
-              size: scaleConfig.scale(20),
-            ),
+            suffixIcon: Icon(Icons.calendar_today, size: scaleConfig.scale(20)),
           ),
-          style: TextStyle(fontSize: scaleConfig.scaleText(16)),
         ),
       ],
     );

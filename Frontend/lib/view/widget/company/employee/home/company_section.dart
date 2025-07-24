@@ -1,88 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/employeehome_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/employee_home_navigator_controller.dart';
 
 class CompanySection extends GetView<EmployeehomeController> {
   const CompanySection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 1,
-        childAspectRatio: 1.2,
-      ),
       itemCount: controller.companyList.length,
       itemBuilder: (context, index) {
         var company = controller.companyList[index];
-        return GestureDetector(
-          onTap: () => controller.goToWorkSpaceEmployee(company.companyId),
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(context.scaleConfig.scale(15))),
-            elevation: context.scaleConfig.scale(5),
-            child: Stack(
+        return Card(
+          margin: const EdgeInsets.only(bottom: 16),
+          elevation: 4,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () => controller.goToWorkSpaceEmployee(
+                company.companyId, company.employees),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(context.scaleConfig.scale(15)),
+                SizedBox(
+                  height: 150,
+                  width: double.infinity,
                   child: Image.network(
                     controller.getCompanyImageUrl(company.companyImage ?? ''),
                     fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
+                    errorBuilder: (context, error, stackTrace) => Container(
+                        color: Colors.grey.shade300,
+                        child: const Icon(Icons.business,
+                            size: 50, color: Colors.grey)),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(context.scaleConfig.scale(15)),
-                    color: Colors.black.withOpacity(0.3),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              company.companyName ?? '173'.tr,
+                              style: context.textTheme.titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              company.companyJob?.tr ?? 'not_specified'.tr,
+                              style: context.textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.grey[600]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: () =>
+                            controller.goToCompanyDetailsEmployee(company),
+                        tooltip: "view_details".tr, // TRANSLATED
+                      )
+                    ],
                   ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: context.scaleConfig.scale(15),
-                        horizontal: context.scaleConfig.scale(10)),
-                    child: Text(
-                      company.companyName ??
-                          '173'.tr, // No name available -> No Title
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: context.scaleConfig.scaleText(20),
-                              ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: context.scaleConfig.scale(10),
-                  right: context.scaleConfig.scale(10),
-                  child: ElevatedButton(
-                    onPressed: () =>
-                        controller.goToCompanyDetaislEmployee(company),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              context.scaleConfig.scale(8))),
-                    ),
-                    child: Text(
-                      "82".tr, // View Details
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: context.scaleConfig.scaleText(14)),
-                    ),
-                  ),
-                ),
+                )
               ],
             ),
           ),

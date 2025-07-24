@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/createtask/createtask_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/sectiontitle.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/sendnotification.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/sendviagmail.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/taskdatepicker.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/taskdropdown.dart';
-import 'package:tasknotate/view/widget/company/manager/createtask/textfield.dart';
+import 'package:companymanagment/controller/company/manager/tasks/createtask/createtask_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/view/widget/company/manager/createtask/sectiontitle.dart';
+import 'package:companymanagment/view/widget/company/manager/createtask/sendnotification.dart';
+// import 'package:companymanagment/view/widget/company/manager/createtask/sendviagmail.dart'; // REMOVED
+import 'package:companymanagment/view/widget/company/manager/createtask/taskdatepicker.dart';
+import 'package:companymanagment/view/widget/company/manager/createtask/taskdropdown.dart';
+import 'package:companymanagment/view/widget/company/manager/createtask/textfield.dart';
 
 class CreateTaskCompany extends StatelessWidget {
   const CreateTaskCompany({super.key});
@@ -78,10 +78,23 @@ class CreateTaskCompany extends StatelessWidget {
                       onChanged: controller.updateDescription,
                     ),
                     SizedBox(height: scaleConfig.scale(16)),
-                    TaskDatePicker(),
+                    TaskDatePicker(
+                      label: "start_date".tr,
+                      hint: "select_start_date".tr,
+                      onDateSelected: controller.updateStartDate,
+                    ),
                     SizedBox(height: scaleConfig.scale(16)),
-                    SendViaGmailSwitch(),
-                    SizedBox(height: scaleConfig.scale(8)),
+
+                    // Existing Due Date Picker
+                    TaskDatePicker(
+                      label: "due_date".tr, // Or "Estimated Completion Date"
+                      hint: "select_a_date".tr,
+                      onDateSelected: controller.updateDueDate,
+                    ),
+
+                    SizedBox(height: scaleConfig.scale(16)),
+                    // SendViaGmailSwitch(), // REMOVED
+                    // SizedBox(height: scaleConfig.scale(8)),
                     SendNotificationSwitch(),
                     SizedBox(height: scaleConfig.scale(24)),
                     Padding(

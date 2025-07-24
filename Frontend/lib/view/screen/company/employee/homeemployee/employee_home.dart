@@ -1,12 +1,16 @@
+import 'package:companymanagment/view/screen/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/employeehome_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/view/widget/company/employee/home/ad_section.dart';
-import 'package:tasknotate/view/widget/company/employee/home/company_section.dart';
-import 'package:tasknotate/view/widget/company/employee/home/join_company_section.dart';
-import 'package:tasknotate/view/widget/company/employee/home/recent_tasks.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/employee_home_navigator_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/company/employee/home/company_section.dart';
+import 'package:companymanagment/view/widget/company/employee/home/join_company_section.dart';
+import 'package:companymanagment/view/widget/company/employee/home/recent_tasks.dart';
+// NEW IMPORTS
+import 'package:companymanagment/view/widget/company/employee/home/employee_project_card.dart';
+import 'package:companymanagment/view/widget/company/manager/home/empty_state_widget.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class EmployeeHome extends StatelessWidget {
   const EmployeeHome({super.key});
@@ -14,117 +18,98 @@ class EmployeeHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(EmployeehomeController());
-    final scaleConfig = ScaleConfig(context);
+    final theme = Theme.of(context);
+    final scale = context.scaleConfig;
 
-    return GetBuilder<EmployeehomeController>(
-      builder: (controller) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(
-            "342".tr, // Welcome Employee
-            style: TextStyle(fontSize: scaleConfig.scaleText(20)),
+    return Scaffold(
+      backgroundColor: theme.colorScheme.background,
+      appBar: AppBar(
+        title: Text('employee_dashboard'.tr),
+        centerTitle: false,
+        backgroundColor: theme.scaffoldBackgroundColor,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: 'settings'.tr,
+            onPressed: () {
+              // Navigate to the new settings page
+              Get.to(() => const SettingsPage());
+            },
           ),
-          centerTitle: true,
-        ),
-        body: GetBuilder<EmployeehomeController>(
-          builder: (controller) => Handlingdataview(
-            statusRequest: controller.statusRequest,
-            widget: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(scaleConfig.scale(10)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AdSectionEmployee(),
-                    Text(
-                      "92".tr,
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: scaleConfig.scaleText(20),
-                              ),
-                    ),
-                    SizedBox(height: scaleConfig.scale(10)),
-                    if (controller.newTaskList.isNotEmpty)
-                      RecentTasks()
-                    else
-                      Center(
-                          child: Text(
-                        "259".tr, // No Tasks
-                        style: TextStyle(fontSize: scaleConfig.scaleText(16)),
-                      )),
-                    SizedBox(height: scaleConfig.scale(20)),
-                    Text(
-                      "343".tr, // Join a Company
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: scaleConfig.scaleText(20),
-                              ),
-                    ),
-                    SizedBox(height: scaleConfig.scale(10)),
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
-                            borderRadius:
-                                BorderRadius.circular(scaleConfig.scale(10)),
-                          ),
-                          child: IconButton(
-                            color: Colors.white,
-                            iconSize: scaleConfig.scale(40),
-                            onPressed: controller.toggler,
-                            icon: Icon(Icons.add),
-                          ),
-                        ),
-                        SizedBox(width: scaleConfig.scale(10)),
-                        Expanded(
-                          child: ListTile(
-                            title: Text(
-                              "344".tr, // Join new company
-                              style: TextStyle(
-                                  fontSize: scaleConfig.scaleText(16)),
-                            ),
-                            subtitle: Text(
-                              "345".tr, // Start working with a company
-                              style: TextStyle(
-                                  fontSize: scaleConfig.scaleText(14)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    if (controller.statusjoin) JoinCompanySection(),
-                    SizedBox(height: scaleConfig.scale(20)),
-                    Text(
-                      "175".tr, // Companies
-                      style:
-                          Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: scaleConfig.scaleText(20),
-                              ),
-                    ),
-                    SizedBox(height: scaleConfig.scale(10)),
-                    Handlingdataview(
-                      statusRequest: controller.statusRequest,
-                      widget: controller.companyList.isNotEmpty
-                          ? CompanySection()
-                          : Center(
-                              child: Text(
-                                "347".tr, // No companies available
-                                style: TextStyle(
-                                    fontSize: scaleConfig.scaleText(16)),
-                              ),
-                            ),
-                    ),
-                  ],
-                ),
-              ),
+        ],
+      ),
+      body: GetBuilder<EmployeehomeController>(
+        builder: (controller) => Handlingdataview(
+          statusRequest: controller.statusRequest,
+          widget: RefreshIndicator(
+            onRefresh: () => controller.getData(), // Allows pull-to-refresh
+            child: ListView(
+              padding: EdgeInsets.all(scale.scale(16)),
+              children: [
+                // NEW: Projects Section
+                _buildSectionTitle(context, 'your_projects'.tr),
+                SizedBox(height: scale.scale(10)),
+                controller.projectList.isNotEmpty
+                    ? _buildProjectsSection(controller)
+                    : EmptyStateWidget(
+                        icon: Icons.folder_off_outlined,
+                        message: 'no_projects_assigned'.tr,
+                      ),
+                SizedBox(height: scale.scale(24)),
+
+                // Existing Sections
+                _buildSectionTitle(context, 'recent_tasks'.tr),
+                SizedBox(height: scale.scale(10)),
+                controller.newTaskList.isNotEmpty
+                    ? const RecentTasks()
+                    : EmptyStateWidget(
+                        icon: Icons.task_alt_outlined,
+                        message: 'no_new_tasks'.tr,
+                      ),
+                SizedBox(height: scale.scale(24)),
+                _buildSectionTitle(context, 'your_companies'.tr),
+                SizedBox(height: scale.scale(10)),
+                controller.companyList.isNotEmpty
+                    ? const CompanySection()
+                    : EmptyStateWidget(
+                        icon: Icons.business_center_outlined,
+                        message: 'no_companies_joined'.tr,
+                      ),
+                SizedBox(height: scale.scale(24)),
+                const JoinCompanySection(),
+              ]
+                  .animate(interval: 80.ms)
+                  .fade(duration: 400.ms)
+                  .slideY(begin: 0.2),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  // NEW: Widget builder for the projects list
+  Widget _buildProjectsSection(EmployeehomeController controller) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: controller.projectList.length,
+      itemBuilder: (context, index) {
+        final project = controller.projectList[index];
+        return EmployeeProjectCard(
+          project: project,
+          onTap: () => controller.goToProjectWorkspace(project),
+        );
+      },
+    );
+  }
+
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Text(
+      title,
+      style: context.appTheme.textTheme.headlineSmall
+          ?.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }

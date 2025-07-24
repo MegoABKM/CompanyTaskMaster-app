@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/profile/updateprofileemployee_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/company/employee/home/profile/edit_able_field.dart';
-import 'package:tasknotate/view/widget/company/employee/home/profile/update_image_section_profile.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/profile/updateprofileemployee_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/company/employee/home/profile/edit_able_field.dart';
+import 'package:companymanagment/view/widget/company/employee/home/profile/update_image_section_profile.dart';
 
 class UpdateProfileEmployeePage extends StatelessWidget {
   const UpdateProfileEmployeePage({super.key});

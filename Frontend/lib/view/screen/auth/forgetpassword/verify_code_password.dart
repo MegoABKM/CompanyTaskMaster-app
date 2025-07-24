@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/auth/verifyforgetpassword_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_text_body_auth.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_text_title_auth.dart';
+import 'package:companymanagment/controller/auth/verifyforgetpassword_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_text_body_auth.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_text_title_auth.dart';
 
 class VerifyCodePassword extends StatelessWidget {
   const VerifyCodePassword({super.key});

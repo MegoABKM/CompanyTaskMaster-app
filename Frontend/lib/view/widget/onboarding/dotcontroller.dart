@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/onboarding_controller.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/data/datasource/static/static.dart';
+import 'package:companymanagment/controller/onboarding_controller.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/data/datasource/static/static.dart';
 
 class CustomDotControllerOnBoarding extends StatelessWidget {
   const CustomDotControllerOnBoarding({super.key});

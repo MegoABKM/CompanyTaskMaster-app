@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/imageasset.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
 
 class HandlingDataAuthview extends StatelessWidget {
   final StatusRequest? statusRequest;
@@ -19,7 +19,7 @@ class HandlingDataAuthview extends StatelessWidget {
             children: [
               Center(
                 child: LottieBuilder.asset(
-                  AppImageAsset.loading,
+                  AppImageAsset.loading2,
                 ),
               ),
               SizedBox(

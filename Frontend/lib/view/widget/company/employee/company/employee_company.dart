@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/viewcompany_controller.dart';
-import 'package:tasknotate/core/constant/imageasset.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/viewcompany_controller.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
 
 class EmployeeCompany extends StatelessWidget {
   final CompanyModel companyModel;

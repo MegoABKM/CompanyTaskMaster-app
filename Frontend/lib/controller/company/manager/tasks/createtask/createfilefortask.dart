@@ -4,13 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/filefunctions.dart';
-import 'package:tasknotate/core/functions/fileutils.dart';
-import 'package:tasknotate/data/datasource/remote/company/filedata.dart';
-import 'package:tasknotate/data/model/company/tasks/attachmentmodel.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/filefunctions.dart';
+import 'package:companymanagment/core/functions/fileutils.dart';
+import 'package:companymanagment/data/datasource/remote/company/filedata.dart';
+import 'package:companymanagment/data/model/company/tasks/attachmentmodel.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AddFileController extends GetxController {
@@ -239,7 +238,7 @@ class AddFileController extends GetxController {
   }
 
   void skipToWorkspace() {
-    Get.offAllNamed(AppRoute.home);
+    // Get.offAllNamed(AppRoute.home);
     if (attachments.isEmpty) {
       _showSnackbar("Info", "No files uploaded, returning to workspace.");
     } else {

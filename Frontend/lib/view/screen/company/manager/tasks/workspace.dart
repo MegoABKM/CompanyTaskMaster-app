@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/workspacemanager.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/view/widget/company/workspace/addsection.dart';
-import 'package:tasknotate/view/widget/company/manager/taskattributes.dart';
-import 'package:tasknotate/view/widget/company/workspace/progressbar.dart';
+import 'package:companymanagment/controller/company/manager/tasks/workspacemanager.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/view/widget/company/workspace/addsection.dart';
+import 'package:companymanagment/view/widget/company/manager/taskattributes.dart';
+import 'package:companymanagment/view/widget/company/workspace/progressbar.dart';
 
 class Workspace extends StatelessWidget {
   const Workspace({super.key});

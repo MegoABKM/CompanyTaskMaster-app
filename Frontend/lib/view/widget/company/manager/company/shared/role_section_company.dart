@@ -1,49 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class RoleSectionCompany extends StatelessWidget {
-  final controller;
-  const RoleSectionCompany({super.key, this.controller});
+  final dynamic controller; // Can be Create or Update controller
+  const RoleSectionCompany({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "190".tr, // Company Role
-          style: context.appTheme.textTheme.titleMedium
-              ?.copyWith(fontSize: context.scaleConfig.scaleText(18)),
-        ),
-        SizedBox(height: context.scaleConfig.scale(5)),
-        Card(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(context.scaleConfig.scale(10))),
-            child: DropdownButtonFormField<String>(
-              value: controller.selectedRole,
-              items: controller.roles.map((role) {
-                return DropdownMenuItem(
-                    value: role,
-                    child: Text(role,
-                        style: TextStyle(
-                            fontSize: context.scaleConfig.scaleText(16))));
-              }).toList(),
-              onChanged: controller.selectRole,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: context.scaleConfig.scale(15),
-                    vertical: context.scaleConfig.scale(15)),
-                hintText: "191".tr, // Select a role
-                hintStyle: context.appTheme.textTheme.bodyMedium!.copyWith(
-                    color: context.appTheme.hintColor,
-                    fontSize: context.scaleConfig.scaleText(16)),
-              ),
-              validator: (value) =>
-                  value == null ? "Please select a role" : null,
-            )),
-      ],
+    return DropdownButtonFormField<String>(
+      value: controller.selectedRole,
+      items: controller.roles.map<DropdownMenuItem<String>>((String roleKey) {
+        // Changed 'role' to 'roleKey' for clarity
+        return DropdownMenuItem<String>(
+          value: roleKey, // The value remains the key (e.g., "194")
+          child: Text(
+            roleKey.tr, // THE FIX: Translate the key here
+            style: TextStyle(fontSize: context.scaleConfig.scaleText(16)),
+          ),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        controller.selectRole(newValue);
+      },
+      decoration: InputDecoration(
+        labelText: "190".tr, // Company Role
+        hintText: "191".tr, // Select a role
+        prefixIcon: const Icon(Icons.work_outline),
+      ),
+      validator: (value) => value == null ? "please_select_role".tr : null,
     );
   }
 }

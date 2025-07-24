@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:tasknotate/core/class/statusrequest.dart';
-// import 'package:tasknotate/core/functions/checkinternet.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+// import 'package:companymanagment/core/functions/checkinternet.dart';
 
 //dartz to make the function take two declaration to return two things
 class Crud {

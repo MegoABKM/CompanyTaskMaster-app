@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/updatetask/updatetask_controller.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
+// FIX: Change the import to the new, correct controller
+import 'package:companymanagment/controller/company/manager/tasks/updatetask/updatetask_controller.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
+// FIX: Change the GetView type to the correct controller
 class TaskDatePickerUpdate extends GetView<UpdatetaskCompanyController> {
   const TaskDatePickerUpdate({super.key});
 
   @override
   Widget build(BuildContext context) {
     final scaleConfig = ScaleConfig(context);
-    final TextEditingController dateController =
-        TextEditingController(text: controller.dueDate);
+
+    // FIX: Use the controller's own TextEditingController
+    final TextEditingController dateController = controller.dueDateController;
 
     Future<void> pickDate() async {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
-        initialDate: controller.dueDate.isNotEmpty
-            ? DateTime.tryParse(controller.dueDate) ?? DateTime.now()
+        initialDate: controller.dueDateController.text.isNotEmpty
+            ? DateTime.tryParse(controller.dueDateController.text) ??
+                DateTime.now()
             : DateTime.now(),
         firstDate: DateTime(2000),
-        lastDate: DateTime(2100),
+        lastDate: DateTime(2101),
       );
 
       if (selectedDate != null) {
-        dateController.text =
+        String formattedDate =
             "${selectedDate.year}-${selectedDate.month.toString().padLeft(2, '0')}-${selectedDate.day.toString().padLeft(2, '0')}";
-        controller.updateDueDate(dateController.text);
+        // Update the controller's TextEditingController, which will automatically update the UI
+        dateController.text = formattedDate;
       }
     }
 
@@ -40,7 +45,8 @@ class TaskDatePickerUpdate extends GetView<UpdatetaskCompanyController> {
               ),
         ),
         SizedBox(height: scaleConfig.scale(8)),
-        TextField(
+        TextFormField(
+          // Use TextFormField to listen to controller changes
           controller: dateController,
           readOnly: true,
           onTap: pickDate,

@@ -4,11 +4,10 @@ import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
-import 'package:tasknotate/data/datasource/remote/company/profile_data.dart';
-import 'package:tasknotate/data/model/company/usermodel.dart';
-import 'package:tasknotate/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/data/datasource/remote/company/profile_data.dart';
+import 'package:companymanagment/data/model/company/usermodel.dart';
+import 'package:companymanagment/core/services/services.dart';
 
 class ProfileUpdateManagerController extends GetxController {
   UserModel? userModel;
@@ -154,7 +153,7 @@ class ProfileUpdateManagerController extends GetxController {
         userModel!.usersPhone = int.parse(phoneController.text);
         userModel!.usersImage = newImageUrl;
         update();
-        Get.offAllNamed(AppRoute.home);
+        //  Get.offAllNamed(AppRoute.home);
       } else {
         Get.snackbar("Error", "Failed to update profile.");
       }

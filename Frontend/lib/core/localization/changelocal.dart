@@ -1,64 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/appthemes.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/controller/theme_controller.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/controller/theme_controller.dart';
 
 class LocalController extends GetxController {
   late Locale language;
-  late ThemeData appTheme;
   final MyServices myServices = Get.find<MyServices>();
 
-  LocalController() {
+  @override
+  void onInit() {
+    super.onInit();
     String? sharedprefLang = myServices.sharedPreferences.getString("lang");
 
-    // Check for supported languages
-    switch (sharedprefLang) {
-      case "ar":
-        language = const Locale("ar");
-        break;
-      case "en":
-        language = const Locale("en");
-        break;
-      case "de":
-        language = const Locale("de");
-        break;
-      case "zh":
-        language = const Locale("zh");
-        break;
-      case "es":
-        language = const Locale("es");
-        break;
-      default:
-        language = Locale(Get.deviceLocale?.languageCode ?? "en");
+    if (sharedprefLang == "ar") {
+      language = const Locale("ar");
+    } else if (sharedprefLang == "en") {
+      language = const Locale("en");
+    } else {
+      language = Locale(Get.deviceLocale?.languageCode ?? "en");
     }
-
-    // Initialize theme based on language and theme mode
-    ThemeController themeController = Get.find<ThemeController>();
-    appTheme = themeController.isDarkMode
-        ? AppThemes.darkTheme(language.languageCode)
-        : AppThemes.lightTheme(language.languageCode);
   }
 
   void changeLang(String lang) {
     language = Locale(lang);
+    // SAVE THE LANGUAGE CHOICE
     myServices.sharedPreferences.setString("lang", lang);
+    // SAVE THE FLAG THAT A LANGUAGE HAS BEEN CHOSEN
+    myServices.sharedPreferences.setBool("lang_chosen", true);
 
-    // Update theme based on new language and current theme mode
     ThemeController themeController = Get.find<ThemeController>();
-    appTheme = themeController.isDarkMode
-        ? AppThemes.darkTheme(lang)
-        : AppThemes.lightTheme(lang);
+    themeController.updateThemeWithNewLanguage();
 
-    // Update ThemeController's currentTheme and notify listeners
-    themeController.currentTheme = appTheme;
-    themeController.update(); // Triggers rebuild for ThemeController listeners
-
-    // Update both locale and theme globally
-    Get.changeTheme(appTheme);
     Get.updateLocale(language);
-
-    // Force a full rebuild by navigating to the same route
-    Get.offAllNamed(Get.currentRoute);
+    // After choosing a language, navigate to the OnBoarding screen
   }
 }

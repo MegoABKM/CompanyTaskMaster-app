@@ -1,15 +1,12 @@
+// lib/view/screen/company/manager/company/view_company_details_manager.dart
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/crudcompany/viewcompany_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/button_delete_view_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/button_workspace_view_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/employee_details_view_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/image_section_view_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/manager_details_section_view_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/viewcompany/show_fields_section_view_company.dart';
+import 'package:companymanagment/controller/company/manager/crudcompany/viewcompany_controller.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_button_auth.dart';
+import 'package:companymanagment/view/widget/company/manager/company/viewcompany/company_info_card.dart';
+import 'package:companymanagment/view/widget/company/manager/company/viewcompany/company_member_list.dart';
+import 'package:companymanagment/view/widget/company/manager/company/viewcompany/company_sliver_app_bar.dart';
 
 class ViewCompanyManager extends StatelessWidget {
   const ViewCompanyManager({super.key});
@@ -20,45 +17,62 @@ class ViewCompanyManager extends StatelessWidget {
     final CompanyModel companyData = controller.companyData!;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "226".tr, // Company
-            style: context.appTheme.textTheme.titleLarge
-                ?.copyWith(fontSize: context.scaleConfig.scaleText(20)),
-          ),
-          actions: [
-            MaterialButton(
-              onPressed: () => controller.goToUpdateCompany(),
-              child: Icon(FontAwesomeIcons.penToSquare,
-                  size: context.scaleConfig.scale(24)),
-            ),
-          ],
-        ),
-        body: ListView(children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: context.scaleConfig.scale(20),
-                vertical: context.scaleConfig.scale(20)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Company Image
-                ImageSectionViewCompany(companyData),
-                SizedBox(height: context.scaleConfig.scale(10)),
-                ShowFieldsSectionViewCompany(
-                  companyModel: companyData,
+      body: CustomScrollView(
+        slivers: [
+          // Dynamic App Bar that collapses
+          CompanySliverAppBar(companyData: companyData),
+
+          // The rest of the content scrolls
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                const SizedBox(height: 16),
+                CompanyInfoCard(companyData: companyData),
+                CompanyMemberList(companyData: companyData),
+                const SizedBox(height: 24),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: CustomButtonAuth(
+                    textbutton: "Go To Workspace",
+                    onPressed: controller.goToWorkspace,
+                  ),
                 ),
-                SizedBox(height: context.scaleConfig.scale(20)),
-                ManagerDetailsSectionViewCompany(companyModel: companyData),
-                SizedBox(height: context.scaleConfig.scale(20)),
-                EmployeeDetailsViewCompany(companyModel: companyData),
-                SizedBox(height: context.scaleConfig.scale(20)),
-                ButtonWorkspaceViewCompany(),
-                SizedBox(height: context.scaleConfig.scale(10)),
-                ButtonDeleteViewCompany(companyModel: companyData)
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: OutlinedButton.icon(
+                    icon: const Icon(Icons.delete_forever_outlined),
+                    // FIX: Use translation key for consistent casing
+                    label: Text("delete_company".tr),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.red,
+                      side: const BorderSide(color: Colors.red),
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    onPressed: () {
+                      Get.defaultDialog(
+                        title: "Confirm Deletion",
+                        middleText:
+                            "Are you sure you want to delete this company? This action cannot be undone.",
+                        // FIX: Use translation key for consistent casing
+                        textConfirm: "delete_confirm".tr,
+                        textCancel: "cancel".tr,
+                        confirmTextColor: Colors.white,
+                        buttonColor: Colors.red,
+                        onConfirm: () {
+                          Get.back(); // Close dialog first
+                          controller.deletecompany(companyData.companyId!);
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: 32),
               ],
             ),
-          )
-        ]));
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,29 +1,23 @@
-import 'package:tasknotate/core/constant/imageasset.dart';
-import 'package:tasknotate/data/model/onboardingmodel.dart';
+import 'package:get/get.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
+import 'package:companymanagment/data/model/onboardingmodel.dart';
 
+// This list is now focused on the core features of Injaz for company management.
 List<OnBoardingmodel> onBoardingList = [
   OnBoardingmodel(
-      title: "choose_your_language",
-      body: "supports_many_languages",
-      image: AppImageAsset.laugnauge),
-  OnBoardingmodel(
-      title: "welcome_to_tasknotate",
-      body: "manage_tasks_take_notes",
+      title: "onboarding_title_1".tr,
+      body: "onboarding_body_1".tr,
       image: AppImageAsset.onBoardingImageOne),
   OnBoardingmodel(
-      title: "create_organize_effortlessly",
-      body: "easily_create_tasks_notes",
+      title: "onboarding_title_2".tr,
+      body: "onboarding_body_2".tr,
       image: AppImageAsset.onBoardingImageTwo),
   OnBoardingmodel(
-      title: "stay_on_track_prioritize",
-      body: "set_priorities_deadlines",
+      title: "onboarding_title_3".tr,
+      body: "onboarding_body_3".tr,
+      image: AppImageAsset.onBoardingImageThree),
+  OnBoardingmodel(
+      title: "onboarding_title_4".tr,
+      body: "onboarding_body_4".tr,
       image: AppImageAsset.onBoardingImageFour),
-  OnBoardingmodel(
-      title: "personalized_experience",
-      body: "switch_light_dark_mode",
-      image: AppImageAsset.onBoardingImageFive),
-  OnBoardingmodel(
-      title: "change_color",
-      body: "Select_your_color",
-      image: AppImageAsset.colorize),
 ];

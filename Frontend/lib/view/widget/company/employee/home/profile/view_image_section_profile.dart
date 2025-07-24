@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/profile/viewprofileemployee_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/profile/viewprofileemployee_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class ViewImageSectionProfile extends GetView<ViewProfileEmployeeController> {
   const ViewImageSectionProfile({super.key});

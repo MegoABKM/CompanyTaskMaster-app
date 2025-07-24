@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/viewtask_controller.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/assigneemployeetotask.dart';
-import 'package:tasknotate/data/model/company/tasks/assignedemployeemodel.dart';
-import 'package:tasknotate/data/model/company/tasks/attachmentmodel.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/subtasksmode.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart';
-import 'package:tasknotate/view/screen/company/manager/tasks/updatetask/updatesubtask.dart';
+import 'package:companymanagment/controller/company/manager/tasks/viewtask_controller.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/assigneemployeetotask.dart';
+import 'package:companymanagment/data/model/company/tasks/assignedemployeemodel.dart';
+import 'package:companymanagment/data/model/company/tasks/attachmentmodel.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/data/model/company/tasks/subtasksmode.dart';
+import 'package:companymanagment/data/model/company/tasks/taskcompanymodel.dart';
+import 'package:companymanagment/view/screen/company/manager/tasks/updatetask/updatesubtask.dart';
 
 class AsignuserUpdatetotaskcontroller extends GetxController {
   TaskCompanyModel? taskcompanydetail;

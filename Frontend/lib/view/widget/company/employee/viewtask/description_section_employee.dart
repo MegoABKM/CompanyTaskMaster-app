@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/data/model/company/tasks/newtasksmodel.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/data/model/company/tasks/newtasksmodel.dart';
+import 'package:companymanagment/data/model/company/tasks/taskcompanymodel.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class DescriptionSectionEmp extends StatelessWidget {
   final ThemeData theme;

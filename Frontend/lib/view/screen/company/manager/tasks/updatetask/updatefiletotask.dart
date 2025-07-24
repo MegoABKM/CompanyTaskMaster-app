@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/updatetask/updatefilefortask.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/data/model/company/tasks/attachmentmodel.dart';
-import 'package:tasknotate/core/shared/mediaviewer/imageviewerscreen.dart';
-import 'package:tasknotate/core/shared/mediaviewer/videoplayerscreen.dart';
+import 'package:companymanagment/controller/company/manager/tasks/updatetask/updatefilefortask.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/data/model/company/tasks/attachmentmodel.dart';
+import 'package:companymanagment/core/shared/mediaviewer/imageviewerscreen.dart';
+import 'package:companymanagment/core/shared/mediaviewer/videoplayerscreen.dart';
 
 class UpdateFileToTask extends StatelessWidget {
   UpdateFileToTask({super.key});

@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/data/datasource/remote/company/workspace.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart';
-import 'package:tasknotate/view/screen/company/manager/tasks/createtask/createtaskcompany.dart';
-import 'package:tasknotate/view/screen/company/manager/tasks/viewtaskcompany.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/data/datasource/remote/company/workspace.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/data/model/company/tasks/taskcompanymodel.dart';
+import 'package:companymanagment/view/screen/company/manager/tasks/createtask/createtaskcompany.dart';
+import 'package:companymanagment/view/screen/company/manager/tasks/viewtaskcompany.dart';
 
 class WorkspaceController extends GetxController {
   final WorkspaceData workspaceData = WorkspaceData(Get.find());

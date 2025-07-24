@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // Added for .tr
-import 'package:tasknotate/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
+import 'package:companymanagment/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
 
 class AdSection extends StatelessWidget {
   final String title;

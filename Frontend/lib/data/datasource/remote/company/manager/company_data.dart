@@ -1,5 +1,5 @@
-import 'package:tasknotate/core/class/crud.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/core/class/crud.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 
 class CompanyData {
   Crud crud;
@@ -55,6 +55,14 @@ class CompanyData {
   removeemployee(String? employeeid, String? companyid) async {
     var response = await crud.postData(AppLink.deleteemployeecompany,
         {"employeeid": employeeid, "companyid": companyid});
+    return response.fold((l) => l, (r) => r);
+  }
+
+  Future<dynamic> nudgeEmployee(String employeeId, String managerName) async {
+    var response = await crud.postData(AppLink.nudgeEmployee, {
+      "employee_id": employeeId,
+      "manager_name": managerName,
+    });
     return response.fold((l) => l, (r) => r);
   }
 }

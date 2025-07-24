@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/tasks/viewtaskemp_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/company/employee/viewtask/assignment_user_section_employee.dart';
-import 'package:tasknotate/view/widget/company/employee/viewtask/description_section_employee.dart';
-import 'package:tasknotate/view/widget/company/employee/viewtask/attachments_section_employee.dart';
-import 'package:tasknotate/view/widget/company/employee/viewtask/subtasks_section_employee.dart';
-import 'package:tasknotate/view/widget/company/employee/viewtask/task_details_employee.dart';
+import 'package:companymanagment/controller/company/employee/tasks/viewtaskemp_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/company/employee/viewtask/assignment_user_section_employee.dart';
+import 'package:companymanagment/view/widget/company/employee/viewtask/description_section_employee.dart';
+import 'package:companymanagment/view/widget/company/employee/viewtask/attachments_section_employee.dart';
+import 'package:companymanagment/view/widget/company/employee/viewtask/subtasks_section_employee.dart';
+import 'package:companymanagment/view/widget/company/employee/viewtask/task_details_employee.dart';
 
 class ViewTaskCompanyEmployee extends StatefulWidget {
   const ViewTaskCompanyEmployee({super.key});

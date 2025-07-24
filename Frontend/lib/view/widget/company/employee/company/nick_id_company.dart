@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
 
 class NickIdCompany extends StatelessWidget {
   final CompanyModel companyModel;

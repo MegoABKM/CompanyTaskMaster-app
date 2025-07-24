@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class Custombuttonlang extends StatelessWidget {
   final String textbutton;

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/notificationmanager_data.dart';
-import 'package:tasknotate/data/model/company/notifitaskstatusmodel.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/notificationmanager_data.dart';
+import 'package:companymanagment/data/model/company/notifitaskstatusmodel.dart';
 
 class NotificationManagerController extends GetxController {
   List<TaskCheckModel> taskStatusModel = [];

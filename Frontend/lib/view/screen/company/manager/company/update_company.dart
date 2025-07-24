@@ -1,81 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/crudcompany/updatecompany_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/company/manager/company/shared/build_text_filed_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/shared/button_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/shared/worker_count_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/shared/role_section_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/shared/image_section_company.dart';
-import 'package:tasknotate/view/widget/company/manager/company/updatecompany/show_delete_employee_company.dart';
+import 'package:companymanagment/controller/company/manager/crudcompany/updatecompany_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_button_auth.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/build_text_filed_company.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/form_section_card.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/image_section_company.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/role_section_company.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/worker_count_company.dart';
+import 'package:companymanagment/view/widget/company/manager/company/updatecompany/show_delete_employee_company.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class UpdateCompany extends StatelessWidget {
   const UpdateCompany({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // A binding should be used for this screen for consistency
+
     Get.put(UpdatecompanyController());
+    final scale = context.scaleConfig;
+
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(Icons.arrow_back,
-              color: context.appTheme.iconTheme.color,
-              size: context.scaleConfig.scale(24)),
-        ),
-        title: Text(
-          "204".tr, // Update Company
-          style: context.appTheme.textTheme.titleLarge
-              ?.copyWith(fontSize: context.scaleConfig.scaleText(20)),
-        ),
+        title: Text("204".tr), // Update Company
       ),
       body: GetBuilder<UpdatecompanyController>(
         builder: (controller) => Form(
           key: controller.formstate,
           child: ListView(
-            padding: EdgeInsets.all(context.scaleConfig.scale(20)),
+            padding: EdgeInsets.all(scale.scale(16)),
             children: [
-              BuildTextFiledCompany(
-                controller: controller.companyname,
-                label: "182".tr, // Company Name
-                hint: "183".tr, // Enter company name
+              // Section 1: Basic Information
+              FormSectionCard(
+                title: "375".tr, // Basic Information
+                children: [
+                  BuildTextFiledCompany(
+                    controller: controller.companyname,
+                    label: "182".tr, // Company Name
+                    hint: "183".tr, // Enter company name
+                    icon: Icons.business,
+                    validator: (val) =>
+                        val!.isEmpty ? "please_enter_value".tr : null,
+                  ),
+                  SizedBox(height: scale.scale(16)),
+                  // COMPANY ID IS NOW DISPLAY-ONLY
+                  BuildTextFiledCompany(
+                    controller: controller.companynickid,
+                    label: "184".tr, // Company ID
+                    hint: "This ID is auto-generated",
+                    icon: Icons.vpn_key_outlined,
+                    readOnly: true, // Make it non-editable
+                  ),
+                  SizedBox(height: scale.scale(16)),
+                  BuildTextFiledCompany(
+                    controller: controller.companydescription,
+                    label: "186".tr, // Description
+                    hint: "187".tr, // Enter a short description
+                    icon: Icons.description_outlined,
+                    maxLines: 3,
+                    validator: (val) =>
+                        val!.isEmpty ? "please_enter_value".tr : null,
+                  ),
+                ],
               ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              BuildTextFiledCompany(
-                controller: controller.companynickid,
-                label: "184".tr, // Company ID
-                hint: "185".tr, // Enter company ID
+
+              // Section 2: Company Profile
+              FormSectionCard(
+                title: "376".tr, // Company Profile
+                children: [
+                  ImageSectionCompany(controller),
+                  SizedBox(height: scale.scale(16)),
+                  RoleSectionCompany(controller: controller),
+                ],
               ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              BuildTextFiledCompany(
-                controller: controller.companydescription,
-                label: "186".tr, // Description
-                hint: "187".tr, // Enter description
+
+              // Section 3: Company Size
+              FormSectionCard(
+                title: "377".tr, // Company Size
+                children: [
+                  WorkerCountCompany(controller: controller),
+                ],
               ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              // Logo Image Picker
-              ImageSectionCompany(controller),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              // Company Role Dropdown
-              RoleSectionCompany(
-                controller: controller,
-              ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              // Worker Count
-              GetBuilder<UpdatecompanyController>(
-                builder: (controller) => WorkerCountCompany(
-                  controller: controller,
+
+              // Section 4: Manage Employees (optional)
+              if (controller.companyData?.employees?.isNotEmpty ?? false)
+                FormSectionCard(
+                  title: "378".tr, // Manage Employees
+                  children: [
+                    ShowDeleteEmployeeCompany(controller: controller),
+                  ],
+                ),
+
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: scale.scale(16)),
+                child: CustomButtonAuth(
+                  textbutton: "379".tr, // Save Changes
+                  onPressed: () {
+                    if (controller.formstate.currentState!.validate()) {
+                      controller.updateData();
+                    }
+                  },
                 ),
               ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-              ShowDeleteEmployeeCompany(
-                controller: controller,
-              ),
-              SizedBox(height: context.scaleConfig.scale(20)),
-
-              // Update Button
-              ButtonCompany(controller)
-            ],
+            ]
+                .animate(interval: 80.ms)
+                .fade(duration: 400.ms)
+                .slideY(begin: 0.2),
           ),
         ),
       ),

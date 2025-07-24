@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/services/services.dart';
+import 'package:companymanagment/core/services/services.dart';
 
 translateDatabase(columnar, columnen) {
   MyServices myServices = Get.find();

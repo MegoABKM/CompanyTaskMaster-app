@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/imageasset.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class AdSectionEmployee extends StatelessWidget {
   const AdSectionEmployee({super.key});

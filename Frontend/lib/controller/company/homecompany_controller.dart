@@ -1,45 +1,36 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/services/services.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/services/services.dart';
 
 class CompanyHomeController extends GetxController {
-  bool? selectedindex = false;
-  bool? selectedindex2 = false;
-  StatusRequest? statusRequest;
+  String? selectedRole;
   MyServices myServices = Get.find();
 
-  selectTile(String namevalue) {
-    if (namevalue == "manager") {
-      selectedindex = true;
-      selectedindex2 = false;
-      print(" Manager  =  $selectedindex");
-      print(" employee  =  $selectedindex2");
-      print("--------------");
-
-      update();
+  void selectTile(String roleKey) {
+    if (selectedRole == roleKey) {
+      selectedRole = null;
+    } else {
+      selectedRole = roleKey;
     }
-    if (namevalue == "employee") {
-      selectedindex2 = true;
-      selectedindex = false;
-      print(" employee  =  $selectedindex2");
-      print(" Manager  =  $selectedindex");
-      print("--------------");
-
-      update();
-    }
+    update();
   }
 
-  goToManagerOrEmployee() {
-    if (selectedindex == true) {
-      myServices.sharedPreferences.setString("userrole", "manager");
-      Get.offAllNamed(AppRoute.home);
+  void goToManagerOrEmployee() {
+    if (selectedRole == null) {
+      Get.snackbar("Selection Required", "Please select a role to continue.");
+      return;
     }
 
-    if (selectedindex2 == true) {
-      myServices.sharedPreferences.setString("userrole", "employee");
+    myServices.sharedPreferences.setString("userrole", selectedRole!);
+    myServices.sharedPreferences.setString("step", "3");
+    print("User role saved: $selectedRole. Step set to 3.");
 
-      Get.offAllNamed(AppRoute.home);
+    // --- THE FIX IS HERE ---
+    // Navigate DIRECTLY to the correct dashboard, clearing the navigation stack.
+    if (selectedRole == "manager") {
+      Get.offAllNamed(AppRoute.managerhome);
+    } else if (selectedRole == "employee") {
+      Get.offAllNamed(AppRoute.employeehome);
     }
   }
 }

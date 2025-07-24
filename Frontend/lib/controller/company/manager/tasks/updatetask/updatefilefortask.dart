@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/filefunctions.dart';
-import 'package:tasknotate/core/functions/fileutils.dart';
-import 'package:tasknotate/data/datasource/remote/company/filedata.dart';
-import 'package:tasknotate/data/model/company/tasks/assignedemployeemodel.dart';
-import 'package:tasknotate/data/model/company/tasks/attachmentmodel.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/subtasksmode.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
-import 'package:tasknotate/view/screen/home_navigator.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/filefunctions.dart';
+import 'package:companymanagment/core/functions/fileutils.dart';
+import 'package:companymanagment/data/datasource/remote/company/filedata.dart';
+import 'package:companymanagment/data/model/company/tasks/assignedemployeemodel.dart';
+import 'package:companymanagment/data/model/company/tasks/attachmentmodel.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/data/model/company/tasks/subtasksmode.dart';
+import 'package:companymanagment/data/model/company/tasks/taskcompanymodel.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdatefilefortaskController extends GetxController {
@@ -217,7 +216,7 @@ class UpdatefilefortaskController extends GetxController {
   }
 
   void goToViewDetails() {
-    Get.offAll(const HomeNavigator(), arguments: {});
+    //  Get.offAll(const HomeNavigator(), arguments: {});
   }
 
   Future<void> updateFilename(String id, String newFilename) async {

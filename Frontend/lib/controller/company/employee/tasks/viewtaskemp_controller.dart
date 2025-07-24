@@ -1,17 +1,16 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/workspacemanager.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/remote/company/taskcompany_data.dart';
-import 'package:tasknotate/data/model/company/tasks/assignedemployeemodel.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/newtasksmodel.dart';
-import 'package:tasknotate/data/model/company/tasks/subtasksmode.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/attachmentmodel.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/controller/company/manager/tasks/workspacemanager.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/company/taskcompany_data.dart';
+import 'package:companymanagment/data/model/company/tasks/assignedemployeemodel.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/data/model/company/tasks/newtasksmodel.dart';
+import 'package:companymanagment/data/model/company/tasks/subtasksmode.dart';
+import 'package:companymanagment/data/model/company/tasks/taskcompanymodel.dart';
+import 'package:companymanagment/data/model/company/tasks/attachmentmodel.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ViewtaskEmpController extends GetxController {
@@ -123,7 +122,6 @@ class ViewtaskEmpController extends GetxController {
   }
 
   void goToWorkSpace() {
-    // Send arguments to the previous page using Get.back
     Get.back(
       result: {
         'companyid': taskcompanydetail!.companyId,
@@ -131,42 +129,36 @@ class ViewtaskEmpController extends GetxController {
       },
     );
 
-    // Delete the WorkspaceController if it exists
     if (Get.isRegistered<WorkspaceController>()) {
       Get.delete<WorkspaceController>();
     }
   }
 
   void goToHome() {
-    Get.offAllNamed(AppRoute.home);
+    // Get.offAllNamed(AppRoute.home);
   }
 
   @override
   void onInit() {
     super.onInit();
 
-    // Fetch the 'from' argument passed during navigation
     from = Get.arguments['from'];
 
-    // Check if 'from' is "employee" and get new tasks
     if (from == "employee") {
-      newtasks = Get.arguments[
-          'newtasks']; // Assuming 'newtasks' is passed from the previous screen
-      getDataNewTask(); // Fetch new tasks for employee
+      newtasks = Get.arguments['newtasks'];
+      getDataNewTask();
     }
 
-    // Fetch task details for managers or others
     taskcompanydetail = Get.arguments['taskcompanydetail'];
     companyemployee = Get.arguments['companyemployee'];
 
-    // If the argument is "update", we already have the data passed from the previous screen
     if (from == "update") {
       assignedemployee = Get.arguments['assignedemployee'];
       subtasks = Get.arguments['subtasks'];
       attachments = Get.arguments['attachments'];
       update();
     } else {
-      getData(); // Fetch data normally if not "employee" or "update"
+      getData();
     }
   }
 }

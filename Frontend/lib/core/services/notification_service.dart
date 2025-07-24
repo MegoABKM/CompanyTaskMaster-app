@@ -1,6 +1,6 @@
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:permission_handler/permission_handler.dart';
-// import 'package:tasknotate/core/services/background_service.dart';
+// import 'package:companymanagment/core/services/background_service.dart';
 
 // class NotificationService {
 //   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
@@ -8,9 +8,9 @@
 
 //   static Future<void> initialize() async {
 //     const AndroidNotificationChannel channel = AndroidNotificationChannel(
-//       'tasknotate_stopwatch',
-//       'Tasknotate Stopwatch',
-//       description: 'Stopwatch for Tasknotate tasks',
+//       'companymanagment_stopwatch',
+//       'companymanagment Stopwatch',
+//       description: 'Stopwatch for companymanagment tasks',
 //       importance: Importance.high,
 //       playSound: false,
 //       enableVibration: false,
@@ -40,7 +40,7 @@
 //           print('Requested notification permission via permission_handler');
 //         }
 //         await androidPlugin.createNotificationChannel(channel);
-//         print('Notification channel created: tasknotate_stopwatch');
+//         print('Notification channel created: companymanagment_stopwatch');
 //       }
 
 //       bool? initialized = await _notificationsPlugin.initialize(

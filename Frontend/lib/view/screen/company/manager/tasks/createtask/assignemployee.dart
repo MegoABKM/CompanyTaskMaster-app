@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/createtask/asignusertotask.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/controller/company/manager/tasks/createtask/asignusertotask.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class AssignemployeeToTask extends StatelessWidget {
   const AssignemployeeToTask({super.key});

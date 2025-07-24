@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/updatetask/assignuserupdatetotask.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/controller/company/manager/tasks/updatetask/assignuserupdatetotask.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class AssignemployeeUpdateToTask extends StatelessWidget {
   const AssignemployeeUpdateToTask({super.key});

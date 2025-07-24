@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/company_data.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/company_data.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 
 class ViewcompanyEmployeeController extends GetxController {
   CompanyModel? companyData;

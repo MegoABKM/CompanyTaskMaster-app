@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/auth/successsignup_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_button_auth.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_text_body_auth.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_text_title_auth.dart';
+import 'package:companymanagment/controller/auth/successsignup_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_button_auth.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_text_body_auth.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_text_title_auth.dart';
 
 class SuccessSignup extends StatelessWidget {
   const SuccessSignup({super.key});

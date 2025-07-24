@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class FieldSection extends StatelessWidget {
   final String value;

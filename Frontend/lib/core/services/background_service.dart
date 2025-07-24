@@ -2,8 +2,8 @@
 // import 'package:flutter_background_service/flutter_background_service.dart';
 // import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:tasknotate/data/datasource/local/sqldb.dart';
-// import 'package:tasknotate/data/model/usertasksmodel.dart';
+// import 'package:companymanagment/data/datasource/local/sqldb.dart';
+// import 'package:companymanagment/data/model/usertasksmodel.dart';
 
 // class BackgroundService {
 //   static final FlutterBackgroundService _service = FlutterBackgroundService();
@@ -21,8 +21,8 @@
 //           onStart: onStart,
 //           autoStart: false,
 //           isForegroundMode: true,
-//           notificationChannelId: 'tasknotate_stopwatch',
-//           initialNotificationTitle: 'Tasknotate Service',
+//           notificationChannelId: 'companymanagment_stopwatch',
+//           initialNotificationTitle: 'companymanagment Service',
 //           initialNotificationContent: 'Running in background',
 //           foregroundServiceNotificationId: 999, // Separate ID for foreground
 //           foregroundServiceTypes: [AndroidForegroundType.specialUse],
@@ -311,15 +311,15 @@
 //     _lastNotificationContent = notificationContent;
 
 //     final androidDetails = AndroidNotificationDetails(
-//       'tasknotate_stopwatch',
-//       'Tasknotate Stopwatch',
-//       channelDescription: 'Stopwatch for Tasknotate tasks',
+//       'companymanagment_stopwatch',
+//       'companymanagment Stopwatch',
+//       channelDescription: 'Stopwatch for companymanagment tasks',
 //       importance: Importance.max,
 //       priority: Priority.high,
 //       ongoing: _activeTasks[taskId]?.status == 'In Progress',
 //       autoCancel: false,
 //       showProgress: true,
-//       ticker: 'Tasknotate Stopwatch',
+//       ticker: 'companymanagment Stopwatch',
 //       groupKey: taskId,
 //       actions: [
 //         AndroidNotificationAction('pending', 'Pending'),
@@ -333,7 +333,7 @@
 //       presentAlert: true,
 //       presentBadge: true,
 //       presentSound: false,
-//       threadIdentifier: 'tasknotate_stopwatch_$taskId',
+//       threadIdentifier: 'companymanagment_stopwatch_$taskId',
 //     );
 
 //     final notificationDetails = NotificationDetails(

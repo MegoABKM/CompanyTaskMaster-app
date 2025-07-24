@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/employeehome_controller.dart';
-import 'package:tasknotate/core/constant/imageasset.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/employee_home_navigator_controller.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class RecentTasks extends GetView<EmployeehomeController> {
   const RecentTasks({super.key});
@@ -25,7 +25,9 @@ class RecentTasks extends GetView<EmployeehomeController> {
                   BorderRadius.circular(context.scaleConfig.scale(10))),
           elevation: context.scaleConfig.scale(3),
           child: InkWell(
-            onTap: () => controller.goToTaskDetaislEmployee(newtask),
+            onTap: () {
+              // controller.goToTaskDetaislEmployee(newtask),
+            },
             child: ListTile(
               leading: newtask.companyImage != null &&
                       newtask.companyImage!.isNotEmpty

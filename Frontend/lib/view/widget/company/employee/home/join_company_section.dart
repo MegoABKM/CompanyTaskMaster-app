@@ -1,46 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/homeemployee/employeehome_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/employee/homeemployee/employee_home_navigator_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_button_auth.dart';
+import 'package:companymanagment/view/widget/company/manager/company/shared/build_text_filed_company.dart';
 
 class JoinCompanySection extends GetView<EmployeehomeController> {
   const JoinCompanySection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: context.scaleConfig.scale(10)),
-      child: Column(
+    final scale = context.scaleConfig;
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: ExpansionTile(
+        leading: const Icon(Icons.add_business_outlined),
+        title:
+            Text('join_new_company'.tr, style: context.textTheme.titleMedium),
         children: [
-          TextFormField(
-            controller: controller.companyid,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(context.scaleConfig.scale(10)))),
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: context.scaleConfig.scale(20),
-                  vertical: context.scaleConfig.scale(10)),
-              hintText: "185".tr, // Enter company ID
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.surface,
-            ),
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(fontSize: context.scaleConfig.scaleText(16)),
-            keyboardType: TextInputType.text,
-          ),
-          SizedBox(height: context.scaleConfig.scale(10)),
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(context.scaleConfig.scale(10))),
-            color: Theme.of(context).colorScheme.secondary,
-            onPressed: controller.requestJoinCompany,
-            child: Text(
-              "346".tr, // Send Request
-              style: TextStyle(fontSize: context.scaleConfig.scaleText(16)),
+          Padding(
+            padding: EdgeInsets.all(scale.scale(16)),
+            child: Column(
+              children: [
+                Text(
+                  'enter_company_id_to_join'.tr,
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(color: Colors.grey[600]),
+                ),
+                SizedBox(height: scale.scale(16)),
+                BuildTextFiledCompany(
+                  controller: controller.companyid,
+                  label: "company_id".tr, // TRANSLATED
+                  hint: "enter_id_here".tr, // TRANSLATED
+                ),
+                SizedBox(height: scale.scale(16)),
+                CustomButtonAuth(
+                  textbutton: 'send_join_request'.tr,
+                  onPressed: controller.requestJoinCompany,
+                ),
+              ],
             ),
           ),
         ],

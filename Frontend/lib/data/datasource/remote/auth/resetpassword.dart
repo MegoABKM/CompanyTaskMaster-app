@@ -1,5 +1,5 @@
-import 'package:tasknotate/core/class/crud.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/core/class/crud.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
 
 class ResetPasswordData {
   late Crud crud;

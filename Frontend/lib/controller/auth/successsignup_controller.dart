@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/routes.dart';
+import 'package:companymanagment/core/constant/routes.dart';
 
 abstract class SuccessSignupController extends GetxController {
   goToLogin();

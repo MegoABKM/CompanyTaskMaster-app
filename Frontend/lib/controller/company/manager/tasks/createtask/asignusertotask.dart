@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/assigneemployeetotask.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/view/screen/company/manager/tasks/createtask/createsubtask.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/assigneemployeetotask.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
+import 'package:companymanagment/view/screen/company/manager/tasks/createtask/createsubtask.dart';
 
 class Asignusertotaskcontroller extends GetxController {
   List<Employees> employees = [];
@@ -12,6 +13,19 @@ class Asignusertotaskcontroller extends GetxController {
 
   String? taskid;
   StatusRequest? statusRequest;
+
+  // This is the new, reusable navigation function.
+  Future<void> _navigateToNextScreen() async {
+    final result = await Get.to(
+      () => const CreateSubtasksPage(),
+      arguments: {"taskid": taskid},
+    );
+
+    if (result == 'created_task') {
+      Get.back(result: 'created_task');
+    }
+  }
+
   void assignEmployee(Employees employee) {
     if (!assignedEmployees.contains(employee)) {
       assignedEmployees.add(employee);
@@ -25,62 +39,73 @@ class Asignusertotaskcontroller extends GetxController {
   }
 
   Future<void> insertData() async {
-    // If no employees exist, skip to the next page
     if (employees.isEmpty) {
-      Get.off(CreateSubtasksPage(), arguments: {"taskid": taskid});
-      Get.snackbar("Info", "No employees available, proceeding to subtasks.");
+      await _navigateToNextScreen();
       return;
     }
 
-    // If employees exist but none are assigned, show error
     if (assignedEmployees.isEmpty) {
       Get.snackbar("Error", "Please assign at least one employee.");
       return;
     }
 
+    statusRequest = StatusRequest.loading;
+    update();
+
     try {
-      statusRequest = StatusRequest.loading;
-      update();
       String userIds =
           assignedEmployees.map((e) => e.employeeId.toString()).join(",");
 
       print("Comma-separated user IDs: $userIds");
 
-      // Send the data to the backend
-      final response = await assigneemployeetotaskData.insertData(
+      var response = await assigneemployeetotaskData.insertData(
         taskid.toString(),
         userIds,
       );
 
-      // Check the response
-      if (response['status'] == 'success') {
-        Get.off(CreateSubtasksPage(), arguments: {"taskid": taskid});
-        Get.snackbar("Success", "Employees assigned successfully!");
-        statusRequest = StatusRequest.success;
-        update();
-      } else {
-        Get.snackbar(
-            "Error", response['message'] ?? "Failed to assign employees.");
+      statusRequest = handlingData(response);
+
+      if (statusRequest == StatusRequest.success) {
+        if (response['status'] == 'success') {
+          Get.snackbar("Success", "Employees assigned successfully!");
+          await _navigateToNextScreen(); // Navigate to the next step
+        } else {
+          Get.snackbar(
+              "Error", response['message'] ?? "Failed to assign employees.");
+          statusRequest = StatusRequest.failure;
+        }
       }
     } catch (e) {
       Get.snackbar("Error", "An unexpected error occurred: $e");
+      statusRequest = StatusRequest.failure;
+    } finally {
+      if (statusRequest != StatusRequest.success) {
+        update();
+      }
     }
-    statusRequest = null;
-    update();
   }
 
-  void skipToSubtasks() {
-    Get.off(CreateSubtasksPage(), arguments: {"taskid": taskid});
+  void skipToSubtasks() async {
     if (employees.isEmpty) {
       Get.snackbar("Info", "No employees available, proceeding to subtasks.");
     }
+    await _navigateToNextScreen();
   }
 
   @override
   void onInit() {
     super.onInit();
-    print("Get.arguments: ${Get.arguments}");
-    employees = Get.arguments['companyemployee'] ?? [];
-    taskid = Get.arguments['taskid'];
+    if (Get.arguments != null) {
+      // THE FIX IS HERE
+      var employeeData = Get.arguments['companyemployee'];
+      if (employeeData != null && employeeData is List) {
+        // Safely cast and map the list to the correct type
+        employees = employeeData.map((e) => e as Employees).toList();
+      } else {
+        employees = [];
+      }
+
+      taskid = Get.arguments['taskid'];
+    }
   }
 }

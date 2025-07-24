@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class ImageSectionCompany extends StatelessWidget {
   final dynamic controller;

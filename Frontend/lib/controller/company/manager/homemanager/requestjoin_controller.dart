@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/requestjoin_data.dart';
-import 'package:tasknotate/data/model/company/requestjoincompanymodel.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/requestjoin_data.dart';
+import 'package:companymanagment/data/model/company/requestjoincompanymodel.dart';
 
 class RequestJoinController extends GetxController {
   List<RequestJoinCompanyModel> joinRequests = [];
@@ -52,7 +51,7 @@ class RequestJoinController extends GetxController {
             request.employeeCompanyId.toString() == employeeCompanyId);
         update();
         Get.snackbar("Success", "Request accepted.");
-        Get.offAllNamed(AppRoute.home); // Navigate to home after accepting
+        // Get.offAllNamed(AppRoute.home); // Navigate to home after accepting
       } else {
         Get.snackbar("Failed", "Error accepting request.");
       }
@@ -76,7 +75,7 @@ class RequestJoinController extends GetxController {
             request.employeeCompanyId.toString() == employeeCompanyId);
         update();
         Get.snackbar("Success", "Request rejected.");
-        Get.offAllNamed(AppRoute.home); // Navigate to home after rejecting
+        //     Get.offAllNamed(AppRoute.home); // Navigate to home after rejecting
       } else {
         Get.snackbar("Failed", "Error rejecting request.");
       }

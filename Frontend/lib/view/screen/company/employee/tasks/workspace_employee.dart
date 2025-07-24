@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/tasks/workspaceemployee_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/widget/company/employee/workspace/progressbaremployee.dart';
-import 'package:tasknotate/view/widget/company/workspace/addsection.dart';
-import 'package:tasknotate/view/widget/company/manager/taskattributes.dart';
+import 'package:companymanagment/controller/company/employee/tasks/workspaceemployee_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/widget/company/employee/workspace/progressbaremployee.dart';
+import 'package:companymanagment/view/widget/company/workspace/addsection.dart';
+import 'package:companymanagment/view/widget/company/manager/taskattributes.dart';
 
 class WorkspaceEmployee extends StatelessWidget {
   const WorkspaceEmployee({super.key});

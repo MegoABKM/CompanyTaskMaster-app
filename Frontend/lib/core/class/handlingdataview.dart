@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/imageasset.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/view/widget/auth/shared/custom_button_auth.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/imageasset.dart';
+import 'package:companymanagment/view/widget/auth/shared/custom_button_auth.dart';
 
 class Handlingdataview extends StatelessWidget {
   final StatusRequest? statusRequest;
@@ -21,7 +19,7 @@ class Handlingdataview extends StatelessWidget {
             children: [
               Center(
                 child: LottieBuilder.asset(
-                  AppImageAsset.loading,
+                  AppImageAsset.loading2,
                 ),
               ),
               const SizedBox(
@@ -75,7 +73,7 @@ class Handlingdataview extends StatelessWidget {
                           CustomButtonAuth(
                             textbutton: "Refresh",
                             onPressed: () async {
-                              Get.offAllNamed(AppRoute.home);
+                              //           Get.offAllNamed(AppRoute.home);
                             },
                           )
                         ],

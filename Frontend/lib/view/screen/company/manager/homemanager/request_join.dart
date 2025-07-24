@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/homemanager/requestjoin_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:companymanagment/controller/company/manager/homemanager/requestjoin_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
 
 class RequestJoinPage extends StatelessWidget {
   const RequestJoinPage({super.key});

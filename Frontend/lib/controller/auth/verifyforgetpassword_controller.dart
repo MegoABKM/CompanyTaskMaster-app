@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/data/datasource/remote/auth/verifycodedata.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/data/datasource/remote/auth/verifycodedata.dart';
 
 abstract class VerifyPasswordController extends GetxController {
   checkCode();

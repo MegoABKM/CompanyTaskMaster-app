@@ -1,51 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
+import 'package:get/get.dart';
 
 class BuildTextFiledCompany extends StatelessWidget {
-  final String label;
   final TextEditingController controller;
+  final String label;
   final String hint;
+  final String? Function(String?)? validator; // The validator function
   final int? maxLines;
+  final IconData? icon;
+  final bool readOnly;
 
-  const BuildTextFiledCompany(
-      {super.key,
-      required this.label,
-      required this.controller,
-      required this.hint,
-      this.maxLines});
+  const BuildTextFiledCompany({
+    super.key,
+    required this.controller,
+    required this.label,
+    required this.hint,
+    this.validator, // Add validator to the constructor
+    this.maxLines = 1,
+    this.icon,
+    this.readOnly = false,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: context.appTheme.textTheme.titleMedium
-              ?.copyWith(fontSize: context.scaleConfig.scaleText(18)),
-        ),
-        SizedBox(height: context.scaleConfig.scale(5)),
-        Card(
-          shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(context.scaleConfig.scale(10))),
-          child: TextFormField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: hint,
-              hintStyle: context.appTheme.textTheme.bodyMedium!.copyWith(
-                  color: context.appTheme.hintColor,
-                  fontSize: context.scaleConfig.scaleText(16)),
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: context.scaleConfig.scale(15),
-                  vertical: context.scaleConfig.scale(15)),
-            ),
-            maxLines: maxLines,
-            validator: (value) =>
-                value == null || value.isEmpty ? 'Please enter $label' : null,
-          ),
-        ),
-      ],
+    return TextFormField(
+      controller: controller,
+      readOnly: readOnly,
+      maxLines: maxLines,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        prefixIcon: icon != null ? Icon(icon) : null,
+      ),
+      // Use the passed-in validator, with a default fallback
+      validator: validator ??
+          (value) {
+            if (value == null || value.isEmpty) {
+              return 'please_enter_value'.tr;
+            }
+            return null;
+          },
     );
   }
 }

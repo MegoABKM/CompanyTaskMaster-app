@@ -1,233 +1,212 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/services/services.dart';
+import 'package:companymanagment/core/services/services.dart';
 
 class AppThemes {
   static final MyServices myServices = Get.find<MyServices>();
 
-  static TextTheme getCommonTextTheme() => TextTheme(
-        displayLarge: TextStyle(
-          fontSize: 96,
-          fontWeight: FontWeight.bold,
-        ),
-        displayMedium: TextStyle(
-          fontSize: 60,
-          fontWeight: FontWeight.bold,
-        ),
-        displaySmall: TextStyle(
-          fontSize: 48,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 34,
-          fontWeight: FontWeight.bold,
-        ),
-        headlineSmall: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+  // Shared text theme for consistency across the app.
+  static TextTheme getCommonTextTheme() => const TextTheme(
+        displayLarge: TextStyle(fontSize: 96, fontWeight: FontWeight.bold),
+        displayMedium: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+        displaySmall: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+        headlineMedium: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+        headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
+            fontSize: 20, fontWeight: FontWeight.w600), // Slightly less bold
         bodyLarge: TextStyle(fontSize: 16),
         bodyMedium: TextStyle(fontSize: 14),
         bodySmall: TextStyle(fontSize: 12),
-        labelLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
+        labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       );
 
-  static const double appBarElevation = 4.0;
-  static const EdgeInsets defaultPadding =
-      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0);
-
-  static const TextStyle dropdownTextStyle = TextStyle(
-    fontSize: 14.0,
-    fontWeight: FontWeight.bold,
-    color: Colors.black87,
-  );
-
-  static const TextStyle emptyTaskTextStyle = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-  );
-
-  static const BoxShadow cardBoxShadow = BoxShadow(
-    color: Colors.black26,
-    blurRadius: 6,
-    offset: Offset(0, 2),
-  );
-
-  static ButtonThemeData buttonTheme(ColorScheme colorScheme) {
-    return ButtonThemeData(
-      buttonColor: colorScheme.primary,
-      textTheme: ButtonTextTheme.primary,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    );
-  }
-
-  static InputDecorationTheme inputDecorationTheme(ColorScheme colorScheme) {
+  // A modern, consistent input decoration for text fields.
+  static InputDecorationTheme _modernInputDecorationTheme(
+    ColorScheme colorScheme,
+  ) {
     return InputDecorationTheme(
+      filled: true,
+      fillColor: colorScheme.surface, // Use the card/surface color
       contentPadding:
-          const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: colorScheme.primary.withOpacity(0.5)),
+        borderSide: BorderSide(
+          color: colorScheme.onSurface.withOpacity(0.1),
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12.0),
+        borderSide: BorderSide(
+          color: colorScheme.onSurface.withOpacity(0.1),
+        ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.0),
-        borderSide: BorderSide(color: colorScheme.secondary, width: 2),
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
       ),
-      hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.6)),
-      labelStyle: TextStyle(color: colorScheme.primary),
+      hintStyle: TextStyle(color: colorScheme.onSurface.withOpacity(0.4)),
+      labelStyle: TextStyle(
+        color: colorScheme.onSurface.withOpacity(0.7),
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
-  // Vibrant color palette with dark variants
+  // --- NEW UNIFIED COLOR PALETTE FOCUSED ON TEAMWORK & PROFESSIONALISM ---
   static final Map<String, Color> availableColors = {
-    // Original colors
-    'vibrantBlue': Color(0xFF1E88E5),
-    'sunsetCoral': Color(0xFFFF6F61),
-    'emeraldGreen': Color(0xFF2ECC71),
-    'royalPurple': Color(0xFF8E44AD),
-    'goldenYellow': Color(0xFFFFC107),
-    'deepTeal': Color(0xFF00897B),
-    'rubyRed': Color(0xFFE91E63),
-    'oceanCyan': Color(0xFF00ACC1),
-    'limeBurst': Color(0xFFCDDC39),
-    'twilightIndigo': Color(0xFF3F51B5),
-    // Dark variants
-    'darkVibrantBlue': Color(0xFF1565C0),
-    'darkSunsetCoral': Color(0xFFD84315),
-    'darkEmeraldGreen': Color(0xFF1B5E20),
-    'darkRoyalPurple': Color(0xFF6A1B9A),
-    'darkGoldenYellow': Color(0xFFF57F17),
-    'darkDeepTeal': Color(0xFF004D40),
-    'darkRubyRed': Color(0xFFB71C1C),
-    'darkOceanCyan': Color(0xFF006064),
-    'darkLimeBurst': Color(0xFF827717),
-    'darkTwilightIndigo': Color(0xFF1A237E),
+    // --- NEW: "Corporate Synergy" Palette ---
+    'synergyBlue': const Color(0xFF005A9C),
+    'innovationTeal': const Color(0xFF13A49E),
+    'productivityOrange': const Color(0xFFF79009),
+    'leadershipPurple': const Color(0xFF6941C6),
+
+    // --- Other Professional Colors ---
+    'dangerRed': const Color(0xFFDC3545),
+    'successGreen': const Color(0xFF198754),
+    'modernSlate': const Color(0xFF344054),
   };
 
+  // Helper methods now default to the new professional blue.
   static Color getPrimaryColor() {
     String? colorKey = myServices.sharedPreferences.getString('PrimaryColor');
-    return availableColors[colorKey] ?? availableColors['vibrantBlue']!;
+    return availableColors[colorKey] ?? availableColors['synergyBlue']!;
   }
 
+  // Secondary color is kept separate for future flexibility, but defaults to the primary.
   static Color getSecondaryColor() {
     String? colorKey = myServices.sharedPreferences.getString('SecondColor');
-    return availableColors[colorKey] ?? availableColors['sunsetCoral']!;
+    return availableColors[colorKey] ?? availableColors['synergyBlue']!;
   }
 
+  // --- REBUILT THEMES ---
+
+  /// The new default "Corporate Synergy" light theme.
   static ThemeData lightTheme(String languageCode) {
-    final primaryColor = getPrimaryColor();
-    final secondaryColor = getSecondaryColor();
+    final primaryAccent = getPrimaryColor();
+    const backgroundColor = Color(0xFFF5F7FA); // Light, cool gray background
+    const cardColor = Colors.white;
+    const textColor = Color(0xFF344054); // Dark slate gray for text
+
+    final colorScheme = ColorScheme.light(
+      primary: primaryAccent,
+      onPrimary: Colors.white,
+      secondary: primaryAccent,
+      onSecondary: Colors.white,
+      surface: cardColor,
+      onSurface: textColor,
+      background: backgroundColor,
+      onBackground: textColor,
+      error: const Color(0xFFD92D20),
+      onError: Colors.white,
+    );
 
     return ThemeData(
-      fontFamily: languageCode == "ar" ? "Cairo" : "OpenSans",
+      fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
       brightness: Brightness.light,
-      primaryColor: primaryColor,
-      scaffoldBackgroundColor: Colors.grey[100],
-      cardColor: Colors.white,
-      colorScheme: ColorScheme.light(
-        primary: primaryColor,
-        onPrimary: Colors.white,
-        secondary: secondaryColor,
-        onSecondary: Colors.white,
-        surface: Colors.white,
-        onSurface: Colors.black87,
-      ),
+      scaffoldBackgroundColor: backgroundColor,
+      cardColor: cardColor,
+      colorScheme: colorScheme,
       textTheme: getCommonTextTheme().apply(
-        bodyColor: Colors.black87,
-        displayColor: Colors.black87,
+        bodyColor: textColor,
+        displayColor: textColor,
+        fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
       ),
-      iconTheme: IconThemeData(color: primaryColor, size: 24),
       appBarTheme: AppBarTheme(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
-        elevation: appBarElevation,
-        shadowColor: Colors.black26,
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        centerTitle: true,
+        foregroundColor: textColor,
+        iconTheme: IconThemeData(color: textColor.withOpacity(0.8)),
+        titleTextStyle: TextStyle(
+          fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: textColor,
+        ),
       ),
-      buttonTheme: buttonTheme(ColorScheme.light(
-        primary: primaryColor,
-        secondary: secondaryColor,
-      )),
-      inputDecorationTheme: inputDecorationTheme(ColorScheme.light(
-        primary: primaryColor,
-        secondary: secondaryColor,
-      )),
-      dividerColor: Colors.grey[300],
+      inputDecorationTheme: _modernInputDecorationTheme(colorScheme),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: primaryColor,
+          backgroundColor: primaryAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          elevation: 1, // Subtle shadow
+          textStyle: TextStyle(
+            fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-      cardTheme: CardTheme(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      ),
+      iconTheme: IconThemeData(color: primaryAccent, size: 24),
+      dividerColor: textColor.withOpacity(0.1),
     );
   }
 
+  /// The new default "Corporate Synergy" dark theme.
   static ThemeData darkTheme(String languageCode) {
-    final primaryColor = getPrimaryColor();
-    final secondaryColor = getSecondaryColor();
+    final primaryAccent = getPrimaryColor();
+    const backgroundColor = Color(0xFF1D2939); // Deep slate background
+    const cardColor = Color(0xFF344054);
+    const lightTextColor = Color(0xFFE4E7EC);
+
+    final colorScheme = ColorScheme.dark(
+      primary: primaryAccent,
+      onPrimary: Colors.white,
+      secondary: primaryAccent,
+      onSecondary: Colors.white,
+      surface: cardColor,
+      onSurface: lightTextColor,
+      background: backgroundColor,
+      onBackground: lightTextColor,
+      error: const Color(0xFFF04438),
+      onError: Colors.white,
+    );
 
     return ThemeData(
-      fontFamily: languageCode == "ar" ? "Cairo" : "OpenSans",
+      fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
       brightness: Brightness.dark,
-      primaryColor: primaryColor,
-      scaffoldBackgroundColor: Color(0xFF1A1A1A),
-      cardColor: Color(0xFF2C2C2C),
-      colorScheme: ColorScheme.dark(
-        primary: primaryColor,
-        onPrimary: Colors.white,
-        secondary: secondaryColor,
-        onSecondary: Colors.white,
-        surface: Color(0xFF2C2C2C),
-        onSurface: Colors.white70,
-      ),
+      scaffoldBackgroundColor: backgroundColor,
+      cardColor: cardColor,
+      colorScheme: colorScheme,
       textTheme: getCommonTextTheme().apply(
-        bodyColor: Colors.white70,
-        displayColor: Colors.white70,
+        bodyColor: lightTextColor.withOpacity(0.8),
+        displayColor: lightTextColor,
+        fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
       ),
-      iconTheme: IconThemeData(color: secondaryColor, size: 24),
       appBarTheme: AppBarTheme(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
-        elevation: appBarElevation,
-        shadowColor: Colors.black45,
+        backgroundColor: backgroundColor,
+        elevation: 0,
+        centerTitle: true,
+        foregroundColor: lightTextColor,
+        titleTextStyle: TextStyle(
+          fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: lightTextColor,
+        ),
       ),
-      buttonTheme: buttonTheme(ColorScheme.dark(
-        primary: primaryColor,
-        secondary: secondaryColor,
-      )),
-      inputDecorationTheme: inputDecorationTheme(ColorScheme.dark(
-        primary: primaryColor,
-        secondary: secondaryColor,
-      )),
-      dividerColor: Colors.grey[800],
+      inputDecorationTheme: _modernInputDecorationTheme(colorScheme),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: primaryColor,
+          backgroundColor: primaryAccent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          elevation: 1,
+          textStyle: TextStyle(
+            fontFamily: languageCode == "ar" ? "Tajawal" : "OpenSans",
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-      cardTheme: CardTheme(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      ),
+      iconTheme: IconThemeData(color: primaryAccent, size: 24),
+      dividerColor: Colors.white.withOpacity(0.15),
     );
   }
 }

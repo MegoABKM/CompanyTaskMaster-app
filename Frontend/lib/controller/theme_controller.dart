@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/appthemes.dart';
-import 'package:tasknotate/core/localization/changelocal.dart';
-import 'package:tasknotate/core/services/services.dart';
+import 'package:companymanagment/core/constant/appthemes.dart';
+import 'package:companymanagment/core/localization/changelocal.dart';
+import 'package:companymanagment/core/services/services.dart';
 
 class ThemeController extends GetxController {
   final MyServices myServices = Get.find<MyServices>();
@@ -158,6 +158,27 @@ class ThemeController extends GetxController {
       update();
     } else {
       print("Invalid color key: $colorKey");
+    }
+  }
+
+  void updateThemeWithNewLanguage() {
+    try {
+      LocalController localController = Get.find<LocalController>();
+      String languageCode = localController.language.languageCode;
+      currentTheme = isDarkMode
+          ? AppThemes.darkTheme(languageCode)
+          : AppThemes.lightTheme(languageCode);
+      Get.changeTheme(currentTheme);
+      update();
+      print("Theme updated for new language: $languageCode");
+    } catch (e) {
+      print(
+          "Error finding LocalController while updating theme for new language: $e");
+      // Fallback if something goes wrong
+      currentTheme =
+          isDarkMode ? AppThemes.darkTheme("en") : AppThemes.lightTheme("en");
+      Get.changeTheme(currentTheme);
+      update();
     }
   }
 }

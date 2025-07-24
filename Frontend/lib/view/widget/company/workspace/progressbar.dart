@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/workspacemanager.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
-import 'package:tasknotate/main.dart'; // Added for scaleConfig
+import 'package:companymanagment/controller/company/manager/tasks/workspacemanager.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/main.dart'; // Added for scaleConfig
 
 class ProgressBarWidget extends StatelessWidget {
   const ProgressBarWidget({super.key});

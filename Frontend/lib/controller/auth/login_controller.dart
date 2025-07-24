@@ -1,17 +1,11 @@
-// ignore_for_file: avoid_print
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/core/functions/savecachedata.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/remote/auth/login.dart';
-import 'package:tasknotate/view/screen/auth/sign_up_google.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/core/functions/savecachedata.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/auth/login.dart';
 
 abstract class LoginController extends GetxController {
   login();
@@ -29,113 +23,32 @@ class LoginControllerImp extends LoginController {
   bool googlestatus = false;
   MyServices myServices = Get.find();
   StatusRequest? statusRequest;
-  Future<void> signInWithGoogle() async {
-    try {
-      statusRequest = StatusRequest.loading;
-      update();
-
-      // Clear any existing session to force a fresh sign-in
-      final currentSession = myServices.supabase.auth.currentSession;
-      if (currentSession != null) {
-        await myServices.supabase.auth.signOut();
-      }
-
-      // Trigger Google OAuth sign-in
-      final authResponse = await myServices.supabase.auth.signInWithOAuth(
-        OAuthProvider.google,
-        redirectTo: 'tasknotate://google-auth-callback',
-        authScreenLaunchMode: LaunchMode.externalApplication,
-        scopes: 'email profile',
-      );
-
-      if (!authResponse) {
-        throw Exception('Google sign-in failed or was canceled');
-      }
-
-      // Wait for the session using polling as a fallback
-      Session? session;
-      const maxAttempts = 15;
-      for (int i = 0; i < maxAttempts; i++) {
-        session = myServices.supabase.auth.currentSession;
-        if (session != null) break;
-        await Future.delayed(const Duration(seconds: 1));
-        print('Attempt $i: Waiting for session...');
-      }
-
-      if (session == null) {
-        throw Exception('No session found after Google sign-in');
-      }
-
-      await handleSession(session);
-    } catch (error, stackTrace) {
-      print('Google Sign-In Error: $error\n$stackTrace');
-      statusRequest = StatusRequest.failure;
-      update();
-
-      Get.defaultDialog(
-        title: "Login Error",
-        middleText: error.toString().replaceFirst('Exception: ', ''),
-      );
-    }
-  }
-
-  Future<void> handleSession(Session session) async {
-    final user = session.user;
-    if (user.email == null) {
-      throw Exception('No email found in Google session');
-    }
-
-    final email = user.email!;
-    final name = user.userMetadata?['full_name'] ?? "";
-
-    statusRequest = StatusRequest.loading;
-    update();
-
-    // Check backend
-    final response = await loginData.checkGoogleToNotCreateProfile(email);
-    if (response == null) {
-      throw Exception('No response from backend');
-    }
-
-    if (response['status'] == "success") {
-      if (response['navigate'] == "company" && response['data'] != null) {
-        saveUserData(response['data']);
-        statusRequest = StatusRequest.success;
-        update();
-        Get.offAllNamed(AppRoute.companyhome);
-      } else if (response['navigate'] == "createprofile") {
-        statusRequest = StatusRequest.success;
-        update();
-        Get.to(() => const SignupGoogle(), arguments: {
-          "email": email,
-          "name": name,
-        });
-      } else {
-        throw Exception('Invalid navigation response');
-      }
-    } else {
-      throw Exception(response['message'] ?? 'Failed to check user status');
-    }
-  }
 
   @override
   login() async {
     if (formstate.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
       update();
-      var response = await loginData.postData(
-        email.text,
-        password.text,
-      );
-
+      var response = await loginData.postData(email.text, password.text);
       statusRequest = handlingData(response);
 
       if (StatusRequest.success == statusRequest) {
         if (response['status'] == "success") {
           if (response['data']['users_approve'] == 1) {
-            saveUserData(response['data']);
+            await saveUserData(response['data']);
 
-            Get.offAllNamed(AppRoute.home);
+            String? userRole =
+                myServices.sharedPreferences.getString("userrole");
+
+            if (userRole == "manager") {
+              myServices.sharedPreferences.setString("step", "3");
+              Get.offAllNamed(AppRoute.managerhome);
+            } else if (userRole == "employee") {
+              myServices.sharedPreferences.setString("step", "3");
+              Get.offAllNamed(AppRoute.employeehome);
+            } else {
+              Get.offAllNamed(AppRoute.companyhome);
+            }
           } else {
             Get.toNamed(AppRoute.verifyCodeSignup,
                 arguments: {"email": email.text});
@@ -146,9 +59,8 @@ class LoginControllerImp extends LoginController {
           statusRequest = StatusRequest.failure;
         }
       }
-
       update();
-    } else {}
+    }
   }
 
   changeObsecure() {
@@ -159,7 +71,7 @@ class LoginControllerImp extends LoginController {
 
   @override
   goToSignup() {
-    Get.offNamed(AppRoute.signUp);
+    Get.toNamed(AppRoute.signUp);
   }
 
   @override

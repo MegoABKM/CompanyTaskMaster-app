@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/view/screen/company/employee/tasks/workspace_employee.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/view/screen/company/employee/tasks/workspace_employee.dart';
 
 class WorkspaceNavigateCompany extends StatelessWidget {
   const WorkspaceNavigateCompany({super.key});

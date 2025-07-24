@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/viewtask_controller.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
+import 'package:companymanagment/controller/company/manager/tasks/viewtask_controller.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart'; // Added for scaleConfig
 
 class DescriptionSection extends GetView<ViewTaskCompanyManagerController> {
   final ThemeData theme;
@@ -37,7 +37,7 @@ class DescriptionSection extends GetView<ViewTaskCompanyManagerController> {
             ],
           ),
           child: Text(
-            controller.taskcompanydetail!.description ?? "318".tr, // N/A
+            controller.taskcompanydetail.description ?? "318".tr, // N/A
             style: theme.textTheme.bodyMedium?.copyWith(
               fontSize: scaleConfig.scaleText(16),
               color: theme.colorScheme.onSurface,

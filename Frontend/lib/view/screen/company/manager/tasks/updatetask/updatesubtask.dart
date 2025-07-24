@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/updatetask/subtaskupdate_controller.dart';
-import 'package:tasknotate/core/class/handlingdataview.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/controller/company/manager/tasks/updatetask/subtaskupdate_controller.dart';
+import 'package:companymanagment/core/class/handlingdataview.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class UpdatesubtaskView extends StatelessWidget {
   const UpdatesubtaskView({super.key});

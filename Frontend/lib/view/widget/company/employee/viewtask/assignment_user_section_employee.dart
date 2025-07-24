@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/tasks/viewtaskemp_controller.dart';
-import 'package:tasknotate/core/constant/utils/extensions.dart';
-import 'package:tasknotate/core/constant/utils/scale_confige.dart';
+import 'package:companymanagment/controller/company/employee/tasks/viewtaskemp_controller.dart';
+import 'package:companymanagment/core/constant/utils/extensions.dart';
+import 'package:companymanagment/core/constant/utils/scale_confige.dart';
 
 class AssignedUsersSectionEmp extends GetView<ViewtaskEmpController> {
   final ThemeData theme;

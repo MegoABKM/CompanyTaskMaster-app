@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
-import 'package:tasknotate/view/screen/company/manager/tasks/createtask/addfiletotask.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/view/screen/company/manager/tasks/createtask/addfiletotask.dart';
 
 class SubtaskController extends GetxController {
   String? taskId;

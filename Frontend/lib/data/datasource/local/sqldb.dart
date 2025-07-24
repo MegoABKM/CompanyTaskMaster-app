@@ -19,7 +19,7 @@ class SqlDb {
 
   Future<Database> _initializeDb() async {
     String databasePath = await getDatabasesPath();
-    String path = join(databasePath, "tasknotate123333.db");
+    String path = join(databasePath, "companymanagment123333.db");
 
     Database myDb = await openDatabase(
       path,

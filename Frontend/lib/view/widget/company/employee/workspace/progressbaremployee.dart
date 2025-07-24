@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/employee/tasks/workspaceemployee_controller.dart'; // Use employee controller
+import 'package:companymanagment/controller/company/employee/tasks/workspaceemployee_controller.dart'; // Use employee controller
 
 class ProgressBarEmployeeWidget extends StatelessWidget {
   const ProgressBarEmployeeWidget({super.key});

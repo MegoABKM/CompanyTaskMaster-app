@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/core/services/services.dart';
-import 'package:tasknotate/data/datasource/remote/company/profile_data.dart';
-import 'package:tasknotate/data/model/company/usermodel.dart';
-import 'package:tasknotate/data/datasource/remote/linkapi.dart';
-import 'package:tasknotate/view/screen/company/manager/homemanager/profile/updateprofilemanagerpage.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/core/services/services.dart';
+import 'package:companymanagment/data/datasource/remote/company/profile_data.dart';
+import 'package:companymanagment/data/model/company/usermodel.dart';
+import 'package:companymanagment/data/datasource/remote/linkapi.dart';
+import 'package:companymanagment/view/screen/company/employee/homeemployee/profile/update_profile_employee.dart';
 
 class ViewProfileEmployeeController extends GetxController {
   UserModel? userModel;
@@ -21,11 +23,35 @@ class ViewProfileEmployeeController extends GetxController {
     super.onInit();
   }
 
+  // UPDATED: Reused the manager's update page, but can be a separate employee update page if needed.
   goToUpdateProfile() {
-    Get.to(const UpdateProfilePage(), arguments: {"usermodel": userModel});
+    Get.to(() => const UpdateProfileEmployeePage(),
+        arguments: {"usermodel": userModel});
   }
 
-  // Construct the full image URL
+  // NEW: Sign Out Method for Employee
+  void signOut() {
+    Get.defaultDialog(
+      title: "sign_out".tr,
+      middleText: "confirm_sign_out".tr,
+      textConfirm: "yes_sign_out".tr,
+      textCancel: "cancel".tr,
+      confirmTextColor: Colors.white,
+      onConfirm: () {
+        // Remove only user-specific data, not app settings
+        myServices.sharedPreferences.remove("id");
+        myServices.sharedPreferences.remove("username");
+        myServices.sharedPreferences.remove("email");
+        myServices.sharedPreferences.remove("phone");
+        myServices.sharedPreferences.remove("userrole");
+        myServices.sharedPreferences
+            .setString("step", "1"); // Go back to login step
+
+        Get.offAllNamed(AppRoute.login);
+      },
+    );
+  }
+
   String getCompanyImageUrl(String imageName) {
     return '${AppLink.imageprofileplace}$imageName';
   }
@@ -34,26 +60,23 @@ class ViewProfileEmployeeController extends GetxController {
     statusRequest = StatusRequest.loading;
     update();
 
-    Map<String, dynamic> response = await profileData.getDataManager(userid);
+    var response = await profileData.getDataManager(userid);
 
     statusRequest = handlingData(response);
-    if (statusRequest == StatusRequest.success) {
+    if (statusRequest == StatusRequest.success &&
+        response is Map<String, dynamic>) {
       if (response["status"] == "success") {
-        // Here, 'data' is a List, so we access the first element
         if (response["data"] is List && response["data"].isNotEmpty) {
-          // Assuming only one user is returned and you want to use the first one
           userModel = UserModel.fromJson(response["data"][0]);
         } else {
           userModel = null;
-          Get.snackbar("Error", "User data is empty");
         }
       } else {
         userModel = null;
-        Get.snackbar("Error", "Failed to load profile");
       }
-      update();
     } else {
-      Get.snackbar("Error", "An error occurred while fetching data");
+      statusRequest = StatusRequest.failure;
     }
+    update();
   }
 }

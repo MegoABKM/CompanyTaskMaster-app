@@ -1,5 +1,5 @@
-import 'package:tasknotate/core/constant/routes.dart';
-import 'package:tasknotate/core/localization/changelocal.dart';
+import 'package:companymanagment/core/constant/routes.dart';
+import 'package:companymanagment/core/localization/changelocal.dart';
 import '../widget/language/custombuttonlang.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

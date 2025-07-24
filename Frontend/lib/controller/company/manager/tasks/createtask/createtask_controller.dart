@@ -1,125 +1,78 @@
 import 'package:get/get.dart';
-import 'package:tasknotate/controller/company/manager/tasks/workspacemanager.dart';
-import 'package:tasknotate/core/class/statusrequest.dart';
-import 'package:tasknotate/core/functions/handlingdatacontroller.dart';
-import 'package:tasknotate/data/datasource/remote/company/manager/createtaskcompany.dart';
+import 'package:companymanagment/core/class/statusrequest.dart';
+import 'package:companymanagment/core/functions/handlingdatacontroller.dart';
+import 'package:companymanagment/data/datasource/remote/company/manager/createtaskcompany.dart';
 import 'package:intl/intl.dart';
-import 'package:tasknotate/data/model/company/companymodel.dart';
-import 'package:tasknotate/data/model/company/tasks/taskcompanymodel.dart'; // Add this import
-import 'package:tasknotate/view/screen/company/manager/tasks/createtask/assignemployee.dart';
+import 'package:companymanagment/data/model/company/companymodel.dart';
 
 class CreatetaskController extends GetxController {
   CreatetaskcompanyData createdata = CreatetaskcompanyData(Get.find());
-  WorkspaceController workspaceController =
-      Get.find<WorkspaceController>(); // Use existing instance
+
   String? companyid;
-  String? taskid;
+  String? projectid;
+
   // Form fields
   String taskTitle = '';
-  String priority = 'Not set';
-  String status = 'Pending';
+  String priority = 'Medium'; // Default priority
+  String status = 'Pending'; // Default status
   String description = '';
   String dueDate = '';
-  bool sendViaGmail = true;
+  String startDate = '';
   bool sendNotification = true;
   StatusRequest? statusRequest;
-  // Dropdown items
-  List<String> priorityOptions = ["Not set", "High", "Medium", "Low"];
-  List<String> statusOptions = ["In Progress", "Completed", "Pending"];
 
-  List<Employees>? employees = [];
+  // Dropdown items
+  List<String> priorityOptions = ["Low", "Medium", "High", "Critical"];
+  List<String> statusOptions = ["Pending", "In Progress", "Completed"];
+  List<Employees> employees = [];
 
   void insertTask() async {
-    if (_isFormValid()) {
-      try {
-        statusRequest = StatusRequest.loading;
-        update();
+    if (taskTitle.isEmpty) {
+      Get.snackbar('Validation Error', 'Task Title cannot be empty.');
+      return;
+    }
+    try {
+      statusRequest = StatusRequest.loading;
+      update();
 
-        String taskCreatedOn = DateFormat('yyyy-MM-dd').format(DateTime.now());
-        String taskLastUpdate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      String taskCreatedOn =
+          DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
-        print('Sending task data:');
-        print('Company ID: $companyid');
-        print('Title: $taskTitle');
-        print('Description: $description');
-        print('Due Date: $dueDate');
+      var response = await createdata.insertData(
+        taskcompanyid: companyid,
+        projectId: projectid,
+        tasktitle: taskTitle,
+        taskdescription: description,
+        taskcreatedon: taskCreatedOn,
+        taskstartdate: startDate,
+        taskduedate: dueDate,
+        taskpriority: priority,
+        taskstatus: status,
+        tasklastupdate: taskCreatedOn,
+        tasknotification: sendNotification.toString(),
+      );
 
-        var response = await createdata.insertData(
-          taskcompanyid: companyid,
-          tasktitle: taskTitle,
-          taskdescription: description,
-          taskcreatedon: taskCreatedOn,
-          taskduedate: dueDate,
-          taskpriority: priority,
-          taskstatus: status,
-          tasklastupdate: taskLastUpdate,
-          tasknotification: sendNotification.toString(),
-        );
+      statusRequest = handlingData(response);
 
-        print('Raw response: $response');
-
-        statusRequest = handlingData(response);
-        update();
-
-        if (statusRequest == StatusRequest.success) {
-          if (response['status'] == 'success') {
-            taskid = response['task_id'].toString();
-            print('Task created with ID: $taskid');
-
-            // Create a new TaskCompanyModel from the form data
-            TaskCompanyModel newTask = TaskCompanyModel(
-              id: taskid, // Assuming task_id is an integer
-              companyId: companyid,
-              title: taskTitle,
-              description: description,
-              createdOn: taskCreatedOn,
-              dueDate: dueDate,
-              priority: priority,
-              status: status,
-              lastUpdated: taskLastUpdate,
-            );
-            workspaceController.taskcompany.insert(0, newTask);
-            if (newTask.status == "Completed") {
-              workspaceController.completedTasks++;
-            }
-            workspaceController.progress =
-                workspaceController.taskcompany.isNotEmpty
-                    ? ((workspaceController.completedTasks /
-                                workspaceController.taskcompany.length) *
-                            100)
-                        .round()
-                    : 0;
-            workspaceController.update();
-
-            Get.snackbar('Success', 'Task created successfully');
-            goToAssignEmployeeTask();
-          } else {
-            Get.snackbar('Error',
-                'Server returned failure: ${response['message'] ?? 'Unknown error'}');
-          }
-        } else {
-          Get.snackbar('Error', 'Request failed: $statusRequest');
-        }
-      } catch (e) {
+      if (statusRequest == StatusRequest.success &&
+          response['status'] == 'success') {
+        Get.back(result: 'created_task'); // Go back and signal success
+        Get.snackbar('Success', 'Task created successfully');
+      } else {
+        Get.snackbar('Error',
+            'Server returned failure: ${response['message'] ?? 'Unknown error'}');
         statusRequest = StatusRequest.failure;
-        update();
-        print('Exception caught: $e');
-        Get.snackbar('Error', 'An error occurred: $e');
       }
-    } else {
-      Get.snackbar('Validation Error', 'Please fill all required fields');
+    } catch (e) {
+      statusRequest = StatusRequest.failure;
+      Get.snackbar('Error', 'An error occurred: $e');
+    } finally {
+      update();
     }
   }
 
-  // Validation for form
-  bool _isFormValid() {
-    return taskTitle.isNotEmpty;
-  }
-
-  // Methods to update form data
   void updateTaskTitle(String title) {
     taskTitle = title;
-    update();
   }
 
   void updatePriority(String newPriority) {
@@ -134,6 +87,11 @@ class CreatetaskController extends GetxController {
 
   void updateDescription(String newDescription) {
     description = newDescription;
+  }
+
+  void updateStartDate(String newStartDate) {
+    // <-- ADD THIS NEW METHOD
+    startDate = newStartDate;
     update();
   }
 
@@ -142,25 +100,18 @@ class CreatetaskController extends GetxController {
     update();
   }
 
-  void updateSendViaGmail(bool value) {
-    sendViaGmail = value;
-    update();
-  }
-
   void updateSendNotification(bool value) {
     sendNotification = value;
     update();
   }
 
-  void goToAssignEmployeeTask() {
-    Get.off(const AssignemployeeToTask(),
-        arguments: {"taskid": taskid, "companyemployee": employees});
-  }
-
   @override
   void onInit() {
-    companyid = Get.arguments['companyid'];
-    employees = Get.arguments['companyemployee'];
     super.onInit();
+    if (Get.arguments != null) {
+      companyid = Get.arguments['companyid'];
+      projectid = Get.arguments['projectid'];
+      employees = Get.arguments['companyemployee'] ?? [];
+    }
   }
 }
