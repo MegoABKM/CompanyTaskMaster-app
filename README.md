@@ -84,6 +84,7 @@ This application is packed with features designed for real-world business scenar
 - **Customizable Accent Colors:** Users can personalize the app's primary and secondary colors to their preference.
 - **Real-time Push Notifications:** Built with **Firebase Cloud Messaging (FCM)** to deliver instant updates for new tasks, status changes, and join requests.
 - **Responsive UI:** The interface is designed to adapt to various screen sizes and orientations.
+- **Engaging & Fluid Animations:** Utilizes the `flutter_animate` package to provide a modern, polished, and responsive user experience.
 
 ---
 
@@ -94,6 +95,7 @@ This application is packed with features designed for real-world business scenar
 - **Architecture:** Follows clean architecture principles, separating UI (Views), Business Logic (Controllers), and Data (Models, Data Sources).
 - **Backend:** PHP with a MySQL Database.
 - **Real-time Notifications:** Firebase Cloud Messaging (FCM).
+- **Animation:** Flutter Animate.
 - **Localization:** `get` package for internationalization.
 
 ---
@@ -123,6 +125,7 @@ To run this project locally, follow these steps:
 
 Created by **Mohammed Abdullkareem** - feel free to connect with me!
 
+---
 
 ## 📜 License
 
